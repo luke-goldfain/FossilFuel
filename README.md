@@ -2,16 +2,16 @@
  Game Programming 2 Final Template
 
 Game Name:  
-Trackie
+Fossil Fuel
 
 Description Short:  
-A simple music tracker made in MonoGame
+A turn-based couch-PVP dinosaur destruction game
 
 Description Long: 
-Trackie allows users to create music using premade instruments using a fun and easy UI. The application will allow the creation of complex tracks and patterns, and support all of the essential affordances of any creative software, such as copy/paste, undo, and multiple select. The goal of Trackie is to provide a simple and tailored environment for creative expression. Get tracking!
+Fossil Fuel pits two players against each other in strategic, off-the-rails combat. Players take turns moving the unit of their choice on a grid, then going into battle on a 2D plane with destructible environments. The havoc you wreak in this physics-based combat will remain on the map and be visible as you plan your next move. Defeat your opponent's dinosaurs to claim victory and avoid becoming Fossil Fuel!
 
 Genre:
-Creative
+Artillery, turn-based tactics
 
 Platform:
 PC
