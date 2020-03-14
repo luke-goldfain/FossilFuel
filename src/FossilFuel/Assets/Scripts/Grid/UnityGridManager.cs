@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class UnityGridManager : MonoBehaviour
 {
+
+
     [SerializeField, Tooltip("The prefab for a grid piece")]
     private GameObject gridPiecePrefab;
 
@@ -18,6 +20,11 @@ public class UnityGridManager : MonoBehaviour
 
     [SerializeField, Tooltip("The prefab for character one")]
     private GameObject characterOnePrefab;
+
+    [SerializeField, Tooltip("The prefab for character two")]
+    private GameObject characterTwoPrefab;
+
+    private GameObject charOneInstance, charTwoInstance;
 
     private float gridPieceD, gridPieceW;
 
@@ -67,7 +74,14 @@ public class UnityGridManager : MonoBehaviour
 
     private void StartPlaceCharacters()
     {
-        Instantiate(characterOnePrefab, GetNodeContainer(GetNode(0, 1)).gameObject.transform.position, Quaternion.identity);
+        charOneInstance = Instantiate(characterOnePrefab, GetNodeContainer(GetNode(0, 1)).gameObject.transform.position, Quaternion.identity);
+        charTwoInstance = Instantiate(characterTwoPrefab, GetNodeContainer(GetNode(3, 2)).gameObject.transform.position, Quaternion.identity);
+
+        charOneInstance.GetComponent<CharacterGridMovement>().GridPosX = 0;
+        charOneInstance.GetComponent<CharacterGridMovement>().GridPosZ = 1;
+
+        charTwoInstance.GetComponent<CharacterGridMovement>().GridPosX = 3;
+        charTwoInstance.GetComponent<CharacterGridMovement>().GridPosZ = 2;
     }
 
     // Update is called once per frame
@@ -82,9 +96,9 @@ public class UnityGridManager : MonoBehaviour
     /// <param name="x"></param>
     /// <param name="z"></param>
     /// <returns></returns>
-    private GridMovableNode GetNode(int x, int z)
+    public GridMovableNode GetNode(int x, int z)
     {
-        GridMovableNode returnNode = nodeList[0]; // default to first node in list
+        GridMovableNode returnNode = null; // default to null
 
         foreach(GridMovableNode n in nodeList)
         {
@@ -102,7 +116,7 @@ public class UnityGridManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    private MovableNodeContainer GetNodeContainer(GridMovableNode node)
+    public MovableNodeContainer GetNodeContainer(GridMovableNode node)
     {
         MovableNodeContainer returnContainer = gridPieceList[0].GetComponentInChildren<MovableNodeContainer>();
 

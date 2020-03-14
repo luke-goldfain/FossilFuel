@@ -15,6 +15,6 @@ public class CameraBillboard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.rotation = Quaternion.LookRotation(this.transform.position - mainCam.transform.position);
+        this.transform.rotation = Quaternion.LookRotation(this.transform.position - mainCam.transform.position, Vector3.Cross(this.transform.position - mainCam.transform.position, Vector3.right));
     }
 }

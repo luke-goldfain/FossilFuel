@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4acd3f2c7b88c144fb5499adfb4fd92a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f66ce24263927314ab611414ec033e4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,9 +103,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5046344628600153075}
   - component: {fileID: 6051645307843992724}
-  - component: {fileID: -7475067620552775136}
+  - component: {fileID: -6331120903823016479}
   m_Layer: 0
-  m_Name: TRexCharacter
+  m_Name: TriceraCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GridPosX: 0
   GridPosZ: 0
---- !u!114 &-7475067620552775136
+--- !u!114 &-6331120903823016479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,6 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0896329a36661964d974337f17718431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerNumber: 1
+  PlayerNumber: 2
   CharacterNumber: 1
   IsMoving: 0
