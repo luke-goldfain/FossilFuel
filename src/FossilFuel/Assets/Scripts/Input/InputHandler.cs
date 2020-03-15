@@ -5,20 +5,20 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour // TODO: Implement command pattern in place of this class's simple booleans
 {
-    private static InputHandler inputHdlerInstance;
+    private static InputHandler inputHdlrInstance;
 
     public static InputHandler Instance
     {
         get
         {
-            if (inputHdlerInstance == null)
+            if (inputHdlrInstance == null)
             {
                 GameObject inputGO = new GameObject();
-                inputHdlerInstance = inputGO.AddComponent<InputHandler>();
-                inputGO.name = "InputHandler (Singleton)";
+                inputHdlrInstance = inputGO.AddComponent<InputHandler>();
+                inputGO.name = "InputHandler (Runtime Singleton)";
             }
 
-            return inputHdlerInstance;
+            return inputHdlrInstance;
         }
     }
 

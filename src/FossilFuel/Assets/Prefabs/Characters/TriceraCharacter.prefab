@@ -102,8 +102,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5046344628600153075}
-  - component: {fileID: 6051645307843992724}
   - component: {fileID: -6331120903823016479}
+  - component: {fileID: 6051645307843992724}
+  - component: {fileID: -3325505584647828039}
+  - component: {fileID: 8252860019065196813}
   m_Layer: 0
   m_Name: TriceraCharacter
   m_TagString: Untagged
@@ -126,20 +128,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6051645307843992724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220427494590185135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0bcd94e3434e234e83404f78eb00c93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GridPosX: 0
-  GridPosZ: 0
 --- !u!114 &-6331120903823016479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +143,46 @@ MonoBehaviour:
   PlayerNumber: 2
   CharacterNumber: 1
   IsMoving: 0
+  AttackTarget: {fileID: 0}
+--- !u!114 &6051645307843992724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220427494590185135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0bcd94e3434e234e83404f78eb00c93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GridPosX: 0
+  GridPosZ: 0
+--- !u!114 &-3325505584647828039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220427494590185135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a44ce19c48f8541b676852c2461418, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackCursorPrefab: {fileID: 6997027738548314851, guid: f98b590347902c3439a8824f7e2046ad,
+    type: 3}
+  CursorGridPosX: 0
+  CursorGridPosZ: 0
+--- !u!114 &8252860019065196813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220427494590185135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: decca140966022441bd811f72998a5c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

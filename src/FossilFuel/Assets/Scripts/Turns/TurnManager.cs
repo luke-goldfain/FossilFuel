@@ -6,7 +6,7 @@ public enum TurnSegments { gridMovement, attackSelection, sliceMovement };
 
 public class TurnManager : MonoBehaviour
 {
-    // observer-ish event handler for switching turns
+    // observer-ish event handler for switching turns and switching to slice mode
     public delegate void SwitchPlayer();
     public static event SwitchPlayer NotifyOfSwitch;
 
@@ -20,7 +20,7 @@ public class TurnManager : MonoBehaviour
             {
                 GameObject turnGO = new GameObject();
                 turnMgrInstance = turnGO.AddComponent<TurnManager>();
-                turnGO.name = "TurnManager (Singleton)";
+                turnGO.name = "TurnManager (Runtime Singleton)";
             }
 
             return turnMgrInstance;
@@ -28,6 +28,9 @@ public class TurnManager : MonoBehaviour
     }
 
     public int MovingPlayer = 1;
+    public int MovingChar = 1;
+
+    public GameObject MovingCharInstance;
 
     public TurnSegments CurrentTurnSegment;
 

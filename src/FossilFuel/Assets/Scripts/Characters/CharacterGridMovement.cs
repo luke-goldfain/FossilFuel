@@ -13,7 +13,7 @@ public class CharacterGridMovement : MonoBehaviour
     [SerializeField]
     public int GridPosX, GridPosZ;
 
-    private GridMovableNode currentNode;
+    public GridMovableNode CurrentNode;
 
     private CharacterTurnInfo charTurnInfo;
 
@@ -45,8 +45,8 @@ public class CharacterGridMovement : MonoBehaviour
 
     private void UpdateSetLocationOnNode()
     {
-        this.currentNode = gridMgrInstance.GetNode(GridPosX, GridPosZ);
-        this.transform.position = gridMgrInstance.GetNodeContainer(currentNode).gameObject.transform.position;
+        this.CurrentNode = gridMgrInstance.GetNode(GridPosX, GridPosZ);
+        this.transform.position = gridMgrInstance.GetNodeContainer(CurrentNode).gameObject.transform.position;
     }
 
     private void UpdateCheckMove()
@@ -79,7 +79,7 @@ public class CharacterGridMovement : MonoBehaviour
             GridPosX = targetX;
             GridPosZ = targetZ;
 
-            currentNode = targetNode;
+            CurrentNode = targetNode;
         }
     }
 

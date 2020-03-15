@@ -26,6 +26,8 @@ public class UnityGridManager : MonoBehaviour
 
     private GameObject charOneInstance, charTwoInstance;
 
+    public List<GameObject> ActiveChars;
+
     private float gridPieceD, gridPieceW;
 
     // Start is called before the first frame update
@@ -72,7 +74,7 @@ public class UnityGridManager : MonoBehaviour
         }
     }
 
-    private void StartPlaceCharacters()
+    private void StartPlaceCharacters() // This method will have to be refactored once there are bigger teams
     {
         charOneInstance = Instantiate(characterOnePrefab, GetNodeContainer(GetNode(0, 1)).gameObject.transform.position, Quaternion.identity);
         charTwoInstance = Instantiate(characterTwoPrefab, GetNodeContainer(GetNode(3, 2)).gameObject.transform.position, Quaternion.identity);
@@ -82,6 +84,9 @@ public class UnityGridManager : MonoBehaviour
 
         charTwoInstance.GetComponent<CharacterGridMovement>().GridPosX = 3;
         charTwoInstance.GetComponent<CharacterGridMovement>().GridPosZ = 2;
+
+        ActiveChars.Add(charOneInstance);
+        ActiveChars.Add(charTwoInstance);
     }
 
     // Update is called once per frame
@@ -91,7 +96,7 @@ public class UnityGridManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets a node at abstracted position x, z in the node list. Defaults to the first node in the list.
+    /// Gets a node at abstracted position x, z in the node list. Defaults to null.
     /// </summary>
     /// <param name="x"></param>
     /// <param name="z"></param>
@@ -105,6 +110,8 @@ public class UnityGridManager : MonoBehaviour
             if (n.XValue == x && n.ZValue == z)
             {
                 returnNode = n;
+
+                return returnNode;
             }
         }
 
@@ -129,5 +136,31 @@ public class UnityGridManager : MonoBehaviour
         }
 
         return returnContainer;
+    }
+
+    public bool CheckIfNodeOccupied(GridMovableNode queryNode)
+    {
+        foreach (GameObject c in ActiveChars)
+        {
+            if (c.GetComponent<CharacterGridMovement>().CurrentNode == queryNode)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public GameObject GetOccupantOfNode(GridMovableNode queryNode)
+    {
+        foreach(GameObject c in ActiveChars)
+        {
+            if (c.GetComponent<CharacterGridMovement>().CurrentNode == queryNode)
+            {
+                return c;
+            }
+        }
+
+        return null;
     }
 }
