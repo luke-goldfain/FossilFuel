@@ -103,6 +103,8 @@ public class GridAttackSelector : MonoBehaviour
             Destroy(attackCursorInstance);
             attackCursorInstance = null;
 
+            this.GetComponent<CharacterSliceMovement>().RefreshSliceTurn(); // Should maybe do this in a "turn segment starting" thing in charTurnInfo instead
+
             charTurnInfo.AdvanceCurrentTurnSegment();
         }
     }

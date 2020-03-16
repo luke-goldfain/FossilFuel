@@ -32,11 +32,13 @@ public class CharacterGridMovement : MonoBehaviour
     {
         if (charTurnInfo.CheckCurrentTurnSegment() == TurnSegments.gridMovement)
         {
+            this.gameObject.transform.localScale = Vector3.Lerp(this.gameObject.transform.localScale, Vector3.one, 0.2f);
+
             UpdateSetLocationOnNode();
 
             if (charTurnInfo.IsMoving)
             {
-                UpdateCheckMove();
+                UpdateCheckMoveGrid();
 
                 UpdateCheckAdvanceTurn();
             }
@@ -49,7 +51,7 @@ public class CharacterGridMovement : MonoBehaviour
         this.transform.position = gridMgrInstance.GetNodeContainer(CurrentNode).gameObject.transform.position;
     }
 
-    private void UpdateCheckMove()
+    private void UpdateCheckMoveGrid()
     {
         int targetX = GridPosX, targetZ = GridPosZ;
 

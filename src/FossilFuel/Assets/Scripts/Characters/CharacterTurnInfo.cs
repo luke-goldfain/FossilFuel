@@ -39,9 +39,12 @@ public class CharacterTurnInfo : MonoBehaviour
 
     public void StartTurn()
     {
-        IsMoving = true;
+        if (turnMgr.MovingPlayer == this.PlayerNumber && turnMgr.MovingChar == this.CharacterNumber)
+        {
+            IsMoving = true;
 
-        turnMgr.MovingCharInstance = this.gameObject;
+            turnMgr.MovingCharInstance = this.gameObject;
+        }
     }
 
     public void EndTurn()
@@ -60,8 +63,8 @@ public class CharacterTurnInfo : MonoBehaviour
     {
         turnMgr.CurrentTurnSegment++;
 
-        // HACK: InputHandler update isn't being called before the next time it's asked for ChoiceKeyDown,
+        // HACK: InputHandler update isn't being called before the next time it's asked for ChoiceKeyDown and the rest,
         // so this forces that false.
-        FindObjectOfType<InputHandler>().ChoiceKeyDown = false;
+        FindObjectOfType<InputHandler>().RefreshKeys();
     }
 }

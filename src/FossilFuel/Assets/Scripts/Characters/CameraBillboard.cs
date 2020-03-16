@@ -11,6 +11,9 @@ public class CameraBillboard : MonoBehaviour
 
     private Vector3 sliceTargetDirection;
 
+    [HideInInspector]
+    public bool IsFlipped;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +27,14 @@ public class CameraBillboard : MonoBehaviour
     {
         if (turnMgr.CurrentTurnSegment == TurnSegments.sliceMovement)
         {
-            this.transform.rotation = Quaternion.LookRotation(-mainCam.transform.forward, Vector3.up);
+            if (IsFlipped)
+            {
+                this.transform.rotation = Quaternion.LookRotation(mainCam.transform.forward, Vector3.up);
+            }
+            else
+            {
+                this.transform.rotation = Quaternion.LookRotation(-mainCam.transform.forward, Vector3.up);
+            }
         }
         else
         {

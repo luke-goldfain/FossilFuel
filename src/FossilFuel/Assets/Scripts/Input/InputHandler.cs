@@ -27,16 +27,12 @@ public class InputHandler : MonoBehaviour // TODO: Implement command pattern in 
                 DownKeyHeld, DownKeyDown,
                 LeftKeyHeld, LeftKeyDown,
                 RightKeyHeld, RightKeyDown,
-                ChoiceKeyDown;
+                ChoiceKeyHeld, ChoiceKeyDown, ChoiceKeyUp;
 
     // Start is called before the first frame update
     void Start()
     {
-        UpKeyHeld = UpKeyDown =
-                DownKeyHeld = DownKeyDown =
-                LeftKeyHeld = LeftKeyDown =
-                RightKeyHeld = RightKeyDown =
-                ChoiceKeyDown = false;
+        RefreshKeys();
     }
 
     // Update is called once per frame
@@ -74,5 +70,20 @@ public class InputHandler : MonoBehaviour // TODO: Implement command pattern in 
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) ChoiceKeyDown = true;
         else ChoiceKeyDown = false;
+
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Return)) ChoiceKeyHeld = true;
+        else ChoiceKeyHeld = false;
+
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return)) ChoiceKeyUp = true;
+        else ChoiceKeyUp = false;
+    }
+
+    public void RefreshKeys()
+    {
+        UpKeyHeld = UpKeyDown =
+        DownKeyHeld = DownKeyDown =
+        LeftKeyHeld = LeftKeyDown =
+        RightKeyHeld = RightKeyDown =
+        ChoiceKeyHeld = ChoiceKeyDown = ChoiceKeyUp = false;
     }
 }

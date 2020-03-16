@@ -36,7 +36,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndTurn(int pNum) // take in player number and switch turn to other player
     {
-        switch (pNum)
+        switch (pNum) // TODO: Add behavior for changing characters
         {
             case 1:
                 MovingPlayer = 2;
