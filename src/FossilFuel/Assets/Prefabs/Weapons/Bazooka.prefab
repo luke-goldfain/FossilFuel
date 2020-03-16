@@ -129,5 +129,5 @@ MonoBehaviour:
   maxAngle: 80
   minAngle: -80
   rotateDegrees: 0.5
-  maxShootPower: 10
-  shootPowerIncrement: 0.16
+  MaxShootPower: 10
+  ShootPowerIncrement: 0.16

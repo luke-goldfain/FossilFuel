@@ -15,10 +15,10 @@ public abstract class AbstractWeapon : MonoBehaviour, IWeapon
     protected float maxAngle, minAngle, rotateDegrees;
 
     [SerializeField]
-    protected float maxShootPower;
+    public float MaxShootPower;
 
     [SerializeField]
-    protected float shootPowerIncrement;
+    public float ShootPowerIncrement;
 
     protected float shootPower;
 

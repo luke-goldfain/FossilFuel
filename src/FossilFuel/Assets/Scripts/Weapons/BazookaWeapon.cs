@@ -16,9 +16,9 @@ public class BazookaWeapon : AbstractWeapon
 
     public void ChargeShot()
     {
-        if (shootPower < maxShootPower)
+        if (shootPower < MaxShootPower)
         {
-            shootPower += shootPowerIncrement;
+            shootPower += ShootPowerIncrement;
         }
     }
 
