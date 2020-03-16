@@ -76,7 +76,7 @@ public class CharacterGridMovement : MonoBehaviour
 
         targetNode = gridMgrInstance.GetNode(targetX, targetZ);
 
-        if (targetNode != null)
+        if (targetNode != null && gridMgrInstance.GetOccupantOfNode(targetNode) == null)
         {
             GridPosX = targetX;
             GridPosZ = targetZ;

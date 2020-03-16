@@ -11,7 +11,7 @@ public class BazookaWeapon : AbstractWeapon
 
     private void Update()
     {
-        projectileSpawn = new Vector3(this.transform.position.x + 0.3f, this.transform.position.y + 0.3f, this.transform.position.z);
+        projectileSpawn = this.transform.position + this.transform.right * 0.4f;
     }
 
     public void ChargeShot()

@@ -30,7 +30,7 @@ public class CharacterSliceMovement : MonoBehaviour
 
     private bool turnFinished;
 
-    private float turnEndTime = 8f;
+    private float turnEndTime = 4f;
     private float turnEndTimer;
 
     // Start is called before the first frame update
