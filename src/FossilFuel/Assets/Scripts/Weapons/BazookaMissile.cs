@@ -7,10 +7,13 @@ public class BazookaMissile : MonoBehaviour
     [SerializeField]
     private GameObject explosionPrefab;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
+        if (other.gameObject.layer != 8) // Ignore objects on the "barrier" layer
+        {
+            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
 
-        this.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
+        }
     }
 }

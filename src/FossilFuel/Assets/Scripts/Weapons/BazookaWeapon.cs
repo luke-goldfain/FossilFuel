@@ -31,5 +31,8 @@ public class BazookaWeapon : AbstractWeapon
         currentProjectile.transform.parent = null;
 
         currentProjectile.GetComponent<Rigidbody>().velocity = (shootPower * this.transform.right); // May only shoot horizontally
+
+        // Reset shoot power for next shot
+        shootPower = 0f;
     }
 }
