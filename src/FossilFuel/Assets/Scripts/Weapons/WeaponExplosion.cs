@@ -26,6 +26,8 @@ public class WeaponExplosion : MonoBehaviour
     {
         timeExisted += Time.deltaTime;
 
+        this.transform.position = this.transform.position + Vector3.zero; // Hacky fix for OnTriggerEnter not working unless this gets position updated
+
         if (timeExisted > timeToStay)
         {
             this.gameObject.SetActive(false);

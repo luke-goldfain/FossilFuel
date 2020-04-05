@@ -37,7 +37,7 @@ public class UnityGridManager : MonoBehaviour
 
         StartPlaceCharacters();
 
-        Camera.main.orthographicSize = (gridDepth > gridWidth) ? gridDepth : gridWidth;
+        Camera.main.orthographicSize = (gridDepth > gridWidth) ? gridDepth * 1.5f : gridWidth * 1.5f;
     }
 
     private void StartCreateGrid()

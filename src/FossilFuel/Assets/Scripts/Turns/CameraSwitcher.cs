@@ -8,6 +8,8 @@ public class CameraSwitcher : MonoBehaviour
 
     private UnityGridManager gridMgr;
 
+    private Camera camComponent;
+
     private Vector3 originalPosition;
     private Quaternion originalRotation;
 
@@ -19,6 +21,8 @@ public class CameraSwitcher : MonoBehaviour
     {
         turnMgr = TurnManager.Instance;
         gridMgr = FindObjectOfType<UnityGridManager>();
+
+        camComponent = this.gameObject.GetComponent<Camera>();
 
         originalPosition = this.transform.position;
         originalRotation = this.transform.rotation;
@@ -32,12 +36,16 @@ public class CameraSwitcher : MonoBehaviour
             this.transform.position = Vector3.Lerp(this.transform.position, (turnMgr.MovingCharInstance.transform.position + turnMgr.MovingCharInstance.GetComponent<CharacterTurnInfo>().AttackTarget.transform.position) / 2 - this.transform.forward, lerpSpeed);
 
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(Vector3.Cross(Vector3.up, turnMgr.MovingCharInstance.transform.position - turnMgr.MovingCharInstance.GetComponent<CharacterTurnInfo>().AttackTarget.transform.position), Vector3.up), lerpSpeed);
+
+            camComponent.farClipPlane = 2f;
         }
         else
         {
             this.transform.position = Vector3.Lerp(this.transform.position, originalPosition, lerpSpeed);
 
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation, originalRotation, lerpSpeed);
+
+            camComponent.farClipPlane = 100f;
         }
     }
 }
