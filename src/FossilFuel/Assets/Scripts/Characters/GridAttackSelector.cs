@@ -96,7 +96,8 @@ public class GridAttackSelector : MonoBehaviour
 
     private void UpdateCheckAdvanceTurn()
     {
-        if (inputHdlr.ChoiceKeyDown && gridMgrInstance.CheckIfNodeOccupied(cursorCurrentNode))
+        // Advance if the player selects a node occupied by a dino of the opposite team
+        if (inputHdlr.ChoiceKeyDown && gridMgrInstance.CheckIfNodeOccupied(cursorCurrentNode) && gridMgrInstance.GetOccupantOfNode(cursorCurrentNode).GetComponent<CharacterTurnInfo>().PlayerNumber != charTurnInfo.PlayerNumber)
         {
             charTurnInfo.AttackTarget = gridMgrInstance.GetOccupantOfNode(cursorCurrentNode);
 

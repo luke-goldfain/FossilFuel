@@ -9,9 +9,13 @@ public class CharacterHealth : MonoBehaviour
 
     private int currentHealth;
 
+    private UnityGridManager gridMgr;
+
     private void Start()
     {
         currentHealth = maxHealth;
+
+        gridMgr = FindObjectOfType<UnityGridManager>();
     }
 
     public void TakeDamage(int damage)
@@ -26,6 +30,8 @@ public class CharacterHealth : MonoBehaviour
 
     private void Die()
     {
+        gridMgr.ActiveChars.Remove(this.gameObject);
+
         this.gameObject.SetActive(false); // TODO: Add gravestone, maybe death animation
     }
 }

@@ -70,7 +70,7 @@ public class CharacterSliceMovement : MonoBehaviour
         }
     }
 
-    private void UpdateCheckMoveSlice() // TODO: Implement and enforce movement borders
+    private void UpdateCheckMoveSlice() 
     {
         if (inputHdlr.RightKeyHeld && !firing)
         {
@@ -124,6 +124,10 @@ public class CharacterSliceMovement : MonoBehaviour
 
             if (turnEndTimer >= turnEndTime)
             {
+                turnEndTimer = 0f;
+
+                // Here is where the turn ends
+                // ISSUE -- If character suicides, this will not be executed and game will be stuck
                 charTurnInfo.EndTurn();
             }
         }
