@@ -66,6 +66,8 @@ public class TurnManager : MonoBehaviour
     {
         bool charActive = false;
 
+        int initiallyCheckedChar = MovingChar;
+
         while (!charActive)
         {
             foreach (GameObject ch in gridMgr.AllChars)
@@ -81,8 +83,14 @@ public class TurnManager : MonoBehaviour
                         return;
                     }
                 }
+                else
+                {
+                    // Set characters inactive that are no longer in the ActiveChars list
+                    ch.SetActive(false); // TODO: Add gravestone, maybe death animation
+                }
             }
 
+            // Iterate thru the list if we haven't found an active character yet
             if (!charActive)
             {
                 MovingChar++;
@@ -90,6 +98,12 @@ public class TurnManager : MonoBehaviour
                 if (MovingChar > gridMgr.AllChars.Count / 2)
                 {
                     MovingChar = 1;
+                }
+
+                if (MovingChar == initiallyCheckedChar) // TODO: End the game; all chars have been checked so someone has lost
+                {
+                    // Placeholder switch to other player
+                    MovingPlayer = MovingPlayer == 1 ? 2 : 1;
                 }
             }
         }

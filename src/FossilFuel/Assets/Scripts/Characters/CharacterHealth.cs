@@ -30,8 +30,6 @@ public class CharacterHealth : MonoBehaviour
 
     private void Die()
     {
-        gridMgr.ActiveChars.Remove(this.gameObject);
-
-        this.gameObject.SetActive(false); // TODO: Add gravestone, maybe death animation
+        gridMgr.ActiveChars.Remove(this.gameObject); // At the end of the turn, this list will be used to set a character inactive
     }
 }
