@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CharacterHealth : MonoBehaviour
 {
     [SerializeField]
     private int maxHealth;
+
+    [SerializeField]
+    private TextMeshPro hpText;
 
     private int currentHealth;
 
@@ -15,12 +19,16 @@ public class CharacterHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
 
+        hpText.text = currentHealth.ToString();
+
         gridMgr = FindObjectOfType<UnityGridManager>();
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        hpText.text = currentHealth.ToString();
 
         if (currentHealth <= 0) // TODO: Let em bounce around first
         {
