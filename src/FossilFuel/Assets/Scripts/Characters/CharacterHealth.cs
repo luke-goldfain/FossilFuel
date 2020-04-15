@@ -11,9 +11,16 @@ public class CharacterHealth : MonoBehaviour
     [SerializeField]
     private TextMeshPro hpText;
 
+    [SerializeField]
+    private TextMeshPro dmgText;
+
+    private RectTransform initialDmgTransform;
+
     private int currentHealth;
 
     private UnityGridManager gridMgr;
+
+    private bool dmgTextEnabled;
 
     private void Start()
     {
@@ -21,7 +28,20 @@ public class CharacterHealth : MonoBehaviour
 
         hpText.text = currentHealth.ToString();
 
+        dmgText.text = "";
+        dmgTextEnabled = false;
+
+        initialDmgTransform = dmgText.rectTransform;
+
         gridMgr = FindObjectOfType<UnityGridManager>();
+    }
+
+    private void Update()
+    {
+        if (dmgTextEnabled)
+        {
+            UpdateDriftDmgUpwards();
+        }
     }
 
     public void TakeDamage(int damage)
@@ -29,10 +49,30 @@ public class CharacterHealth : MonoBehaviour
         currentHealth -= damage;
 
         hpText.text = currentHealth.ToString();
+        dmgText.text = damage.ToString();
+        dmgText.GetComponent<MeshRenderer>().enabled = true;
+        dmgTextEnabled = true;
 
         if (currentHealth <= 0) // TODO: Let em bounce around first
         {
             Die();
+        }
+    }
+
+    void UpdateDriftDmgUpwards()
+    {
+        dmgText.gameObject.transform.Translate(Vector3.up * 0.01f);
+
+        dmgText.color = new Color(dmgText.color.r, dmgText.color.g, dmgText.color.b, dmgText.color.a - 0.01f);
+
+        // Reset values of damage text and stop coroutine when it goes invisible
+        if (dmgText.color.a <= 0f)
+        {
+            dmgText.GetComponent<MeshRenderer>().enabled = false;
+            dmgText.color = new Color(dmgText.color.r, dmgText.color.g, dmgText.color.b, 1f);
+            dmgText.rectTransform.position = initialDmgTransform.position;
+
+            dmgTextEnabled = false;
         }
     }
 
