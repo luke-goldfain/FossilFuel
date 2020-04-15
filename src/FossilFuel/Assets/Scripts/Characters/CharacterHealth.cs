@@ -44,18 +44,30 @@ public class CharacterHealth : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        // Instantly die if this character hits a hazard (for example, the oil hazard below the ground)
+        if (other.tag == "Hazard")
+        {
+            TakeDamage(this.currentHealth);
+        }
+    }
+
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-
-        hpText.text = currentHealth.ToString();
-        dmgText.text = damage.ToString();
-        dmgText.GetComponent<MeshRenderer>().enabled = true;
-        dmgTextEnabled = true;
-
-        if (currentHealth <= 0) // TODO: Let em bounce around first
+        if (damage > 0)
         {
-            Die();
+            currentHealth -= damage;
+
+            hpText.text = currentHealth.ToString();
+            dmgText.text = damage.ToString();
+            dmgText.GetComponent<MeshRenderer>().enabled = true;
+            dmgTextEnabled = true;
+
+            if (currentHealth <= 0) // TODO: Let em bounce around first
+            {
+                Die();
+            }
         }
     }
 

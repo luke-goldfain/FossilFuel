@@ -25,8 +25,13 @@ public class CharacterSliceMovement : MonoBehaviour
     [HideInInspector]
     public GameObject currentWeapon; // TODO: add ability to switch weapons
 
+    [SerializeField]
+    private float jumpForce = 5f;
+
     private bool firing;
     private bool hasFired;
+
+    private bool onGround;
 
     private bool turnFinished;
 
@@ -50,6 +55,7 @@ public class CharacterSliceMovement : MonoBehaviour
 
         firing = false;
         hasFired = false;
+        onGround = false;
         turnFinished = false;
         turnEndTimer = 0f;
     }
@@ -72,18 +78,25 @@ public class CharacterSliceMovement : MonoBehaviour
 
     private void UpdateCheckMoveSlice() 
     {
-        if (inputHdlr.RightKeyHeld && !firing)
+        if (inputHdlr.RightKeyHeld && !firing && onGround)
         {
             rb.velocity = this.transform.right;
 
             billboardScript.IsFlipped = true;
         }
 
-        if (inputHdlr.LeftKeyHeld && !firing)
+        if (inputHdlr.LeftKeyHeld && !firing && onGround)
         {
             rb.velocity = this.transform.right;
 
             billboardScript.IsFlipped = false;
+        }
+
+        if (inputHdlr.JumpKeyDown && !firing && onGround)
+        {
+            rb.velocity += Vector3.up * jumpForce;
+
+            onGround = false;
         }
 
         if (inputHdlr.UpKeyHeld)
@@ -116,6 +129,14 @@ public class CharacterSliceMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (Physics.Raycast(this.transform.position, Vector3.down, out RaycastHit hit, 0.3f, ~(1 << 8)))
+        {
+            onGround = true;
+        }
+    }
+
     private void UpdateCheckAdvanceTurn()
     {
         if (turnFinished)
@@ -137,6 +158,7 @@ public class CharacterSliceMovement : MonoBehaviour
     {
         firing = false;
         hasFired = false;
+        onGround = false;
         turnFinished = false;
         turnEndTimer = 0f;
     }

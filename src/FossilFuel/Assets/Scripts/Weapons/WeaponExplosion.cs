@@ -39,7 +39,7 @@ public class WeaponExplosion : MonoBehaviour
         if (other.gameObject.tag == "Character")
         {
             other.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, damageRadius, 1f);
-            other.GetComponent<CharacterHealth>().TakeDamage((int)(damage - (4f * Vector3.Distance(this.transform.position, other.transform.position))));
+            other.GetComponent<CharacterHealth>().TakeDamage((int)(damage - (8f * Vector3.Distance(this.transform.position, other.transform.position))));
         }
     }
 }

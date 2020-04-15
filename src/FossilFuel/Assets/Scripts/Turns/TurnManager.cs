@@ -11,6 +11,10 @@ public class TurnManager : MonoBehaviour
     public delegate void SwitchPlayer();
     public static event SwitchPlayer NotifyOfSwitch;
 
+    // observer-ish event handler for a team winning
+    public delegate void EndGame();
+    public static event EndGame NotifyOfGameEnd;
+
     private static TurnManager turnMgrInstance;
 
     public static TurnManager Instance
@@ -59,9 +63,15 @@ public class TurnManager : MonoBehaviour
                 break;
         }
 
+        // Notify all observers of NotifyOfSwitch that the player has been switched
         NotifyOfSwitch?.Invoke();
+
+        CheckBothTeamsForActive();
     }
 
+    /// <summary>
+    /// Ensures that the character TurnManager is attempting to give control to is active, iterating through the active characters list until control is given successfully.
+    /// </summary>
     private void EnsureCharIsActive()
     {
         bool charActive = false;
@@ -100,12 +110,50 @@ public class TurnManager : MonoBehaviour
                     MovingChar = 1;
                 }
 
-                if (MovingChar == initiallyCheckedChar) // TODO: End the game; all chars have been checked so someone has lost
+                if (MovingChar == initiallyCheckedChar) 
                 {
                     // Placeholder switch to other player
                     MovingPlayer = MovingPlayer == 1 ? 2 : 1;
+
+                    // Notify all observers of NotifyOfGameEnd that a player has won, and the game is over
+                    NotifyOfGameEnd?.Invoke();
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Checks whether both teams still have an active character. If they don't, notifies subscribers that the game is over.
+    /// </summary>
+    private void CheckBothTeamsForActive()
+    {
+        bool bothTeamsHaveActive = false;
+        bool teamOneActive = false;
+        bool teamTwoActive = false;
+
+        foreach(GameObject ch in gridMgr.ActiveChars)
+        {
+            switch (ch.GetComponent<CharacterTurnInfo>().CharacterNumber)
+            {
+                case 1:
+                    teamOneActive = true;
+                    break;
+                case 2:
+                    teamTwoActive = true;
+                    break;
+            }
+
+            if (teamOneActive && teamTwoActive)
+            {
+                bothTeamsHaveActive = true;
+
+                return;
+            }
+        }
+
+        if (!bothTeamsHaveActive)
+        {
+            NotifyOfGameEnd?.Invoke();
         }
     }
 }
