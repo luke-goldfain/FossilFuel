@@ -47,3 +47,14 @@ MonoBehaviour:
     type: 3}
   gridDepth: 4
   gridWidth: 5
+  characterOnePrefab: {fileID: 220427494590185135, guid: b42c9929fadfd0c49aefc3bc99803b00,
+    type: 3}
+  characterTwoPrefab: {fileID: 220427494590185135, guid: 10f488c523caced45b34607230fc835a,
+    type: 3}
+  charStartingPositions:
+  - {x: 0, y: 1}
+  - {x: 3, y: 2}
+  - {x: 1, y: 3}
+  - {x: 4, y: 0}
+  ActiveChars: []
+  AllChars: []

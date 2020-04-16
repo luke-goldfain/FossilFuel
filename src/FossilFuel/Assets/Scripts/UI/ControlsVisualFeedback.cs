@@ -13,7 +13,7 @@ public class ControlsVisualFeedback : MonoBehaviour
     private Color keyDownColor, keyUpColor;
 
     [SerializeField]
-    private Image spaceBar, upArrow, downArrow, leftArrow, rightArrow, attackFill;
+    private Image spaceBar, upArrow, downArrow, leftArrow, rightArrow, attackFill, shiftKey;
 
     // Start is called before the first frame update
     void Start()
@@ -80,6 +80,15 @@ public class ControlsVisualFeedback : MonoBehaviour
         else
         {
             rightArrow.color = keyUpColor;
+        }
+
+        if (inputHdlr.JumpKeyHeld)
+        {
+            shiftKey.color = keyDownColor;
+        }
+        else
+        {
+            shiftKey.color = keyUpColor;
         }
     }
 }

@@ -24,9 +24,14 @@ public class UnityGridManager : MonoBehaviour
     [SerializeField, Tooltip("The prefab for character two")]
     private GameObject characterTwoPrefab;
 
-    private GameObject charOneInstance, charTwoInstance;
+    [SerializeField, Tooltip("The spawn points for each character. Adding or removing from this will add or remove characters. Teams alternate.")]
+    private List<Vector2Int> charStartingPositions;
 
+    [HideInInspector]
     public List<GameObject> ActiveChars;
+
+    [HideInInspector]
+    public List<GameObject> AllChars;
 
     private float gridPieceD, gridPieceW;
 
@@ -74,19 +79,47 @@ public class UnityGridManager : MonoBehaviour
         }
     }
 
-    private void StartPlaceCharacters() // This method will have to be refactored once there are bigger teams
+    private void StartPlaceCharacters()
     {
-        charOneInstance = Instantiate(characterOnePrefab, GetNodeContainer(GetNode(0, 1)).gameObject.transform.position, Quaternion.identity);
-        charTwoInstance = Instantiate(characterTwoPrefab, GetNodeContainer(GetNode(3, 2)).gameObject.transform.position, Quaternion.identity);
+        ActiveChars = new List<GameObject>();
+        AllChars = new List<GameObject>();
 
-        charOneInstance.GetComponent<CharacterGridMovement>().GridPosX = 0;
-        charOneInstance.GetComponent<CharacterGridMovement>().GridPosZ = 1;
+        bool teamOne = true;
+        int charNum = 1;
 
-        charTwoInstance.GetComponent<CharacterGridMovement>().GridPosX = 3;
-        charTwoInstance.GetComponent<CharacterGridMovement>().GridPosZ = 2;
+        // This list, populated manually in inspector, determines how many dinos to spawn and what their positions will be.
+        foreach(Vector2Int pos in charStartingPositions)
+        {
+            GameObject currentChar;
 
-        ActiveChars.Add(charOneInstance);
-        ActiveChars.Add(charTwoInstance);
+            // Spawn a dino on a team, alternating which team's dino to spawn with a bool
+            if (teamOne)
+            {
+                currentChar = Instantiate(characterOnePrefab, GetNodeContainer(GetNode(pos.x, pos.y)).gameObject.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                currentChar = Instantiate(characterTwoPrefab, GetNodeContainer(GetNode(pos.x, pos.y)).gameObject.transform.position, Quaternion.identity);
+            }
+
+            // Somewhat bruteforce -- If this is the first character in the list, start its turn. Gets the ball rolling; all subsequent turns will be started by TurnManager.
+            if (charStartingPositions.IndexOf(pos) == 0)
+            {
+                currentChar.GetComponent<CharacterTurnInfo>().StartTurn();
+            }
+
+            currentChar.GetComponent<CharacterGridMovement>().GridPosX = pos.x;
+            currentChar.GetComponent<CharacterGridMovement>().GridPosZ = pos.y;
+
+            currentChar.GetComponent<CharacterTurnInfo>().CharacterNumber = charNum;
+
+            if (!teamOne) charNum++; // Increment character number after we've given the current number to both sides
+
+            ActiveChars.Add(currentChar); // Add to list for public reference
+            AllChars.Add(currentChar);
+
+            teamOne = !teamOne; // Alternate teams
+        }
     }
 
     // Update is called once per frame

@@ -27,7 +27,8 @@ public class InputHandler : MonoBehaviour // TODO: Implement command pattern in 
                 DownKeyHeld, DownKeyDown,
                 LeftKeyHeld, LeftKeyDown,
                 RightKeyHeld, RightKeyDown,
-                ChoiceKeyHeld, ChoiceKeyDown, ChoiceKeyUp;
+                ChoiceKeyHeld, ChoiceKeyDown, ChoiceKeyUp,
+                JumpKeyHeld, JumpKeyDown;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +77,12 @@ public class InputHandler : MonoBehaviour // TODO: Implement command pattern in 
 
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return)) ChoiceKeyUp = true;
         else ChoiceKeyUp = false;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) JumpKeyDown = true;
+        else JumpKeyDown = false;
+
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) JumpKeyHeld = true;
+        else JumpKeyHeld = false;
     }
 
     public void RefreshKeys()
@@ -84,6 +91,7 @@ public class InputHandler : MonoBehaviour // TODO: Implement command pattern in 
         DownKeyHeld = DownKeyDown =
         LeftKeyHeld = LeftKeyDown =
         RightKeyHeld = RightKeyDown =
-        ChoiceKeyHeld = ChoiceKeyDown = ChoiceKeyUp = false;
+        ChoiceKeyHeld = ChoiceKeyDown = ChoiceKeyUp =
+        JumpKeyDown = JumpKeyHeld = false;
     }
 }

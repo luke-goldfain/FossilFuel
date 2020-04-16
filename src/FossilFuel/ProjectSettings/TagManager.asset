@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Character
   - Explosion
+  - Hazard
   layers:
   - Default
   - TransparentFX

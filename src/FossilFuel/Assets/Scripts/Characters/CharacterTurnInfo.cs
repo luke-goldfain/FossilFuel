@@ -29,11 +29,6 @@ public class CharacterTurnInfo : MonoBehaviour
         {
             turnMgr.MovingPlayer = this.PlayerNumber;
             turnMgr.MovingChar = 1;
-
-            if (turnMgr.MovingChar == this.CharacterNumber)
-            {
-                StartTurn();
-            }
         }
     }
 
