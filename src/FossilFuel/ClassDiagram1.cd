@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TurnManager" Collapsed="true">
+    <Position X="10.75" Y="1.25" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="TurnManager.SwitchPlayer" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Turns\TurnManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="TurnManager.EndGame" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Turns\TurnManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAEAAACARAAIAAAAAEAEAQAABAAACQAA=</HashCode>
+      <FileName>Assets\Scripts\Turns\TurnManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityGridManager" Collapsed="true">
+    <Position X="2.75" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQIAAADACCAAAABIAAAAAASGABIAAIACAAAABAEAQA=</HashCode>
+      <FileName>Assets\Scripts\Grid\UnityGridManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Grid.GridMovableNode" Collapsed="true">
+    <Position X="2.75" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACEABAAAAAAAAAAQAIAAAgAAACAAAA=</HashCode>
+      <FileName>Assets\Scripts\Grid\GridMovableNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CharacterTurnInfo" Collapsed="true">
+    <Position X="10.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAgAAAAABABEAAAAAAAAgEAAAAAAAAAAFA=</HashCode>
+      <FileName>Assets\Scripts\Characters\CharacterTurnInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CharacterGridMovement" Collapsed="true">
+    <Position X="8.5" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAACAAAAAAAAAAAAAAAAQACBAACAABIEAAAAg=</HashCode>
+      <FileName>Assets\Scripts\Characters\CharacterGridMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GridAttackSelector" Collapsed="true">
+    <Position X="10.75" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAACQAABAAAAEAAAAAQAAACCAADAAAIAAAAAE=</HashCode>
+      <FileName>Assets\Scripts\Characters\GridAttackSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CharacterSliceMovement" Collapsed="true">
+    <Position X="12.75" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EgQAAAAAQCAEAIAEAAAACAAAAAgACFAICAAQoCAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Characters\CharacterSliceMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputHandler" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACABAAEAAAAAABEAAIAgAQApRAAkAEAAACE=</HashCode>
+      <FileName>Assets\Scripts\Input\InputHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractWeapon" Collapsed="true">
+    <Position X="4.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAAAAAABAAAABEAAEAgUAAAQAAACCAAA=</HashCode>
+      <FileName>Assets\Scripts\Weapons\AbstractWeapon.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BazookaWeapon" Collapsed="true">
+    <Position X="4.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\Weapons\BazookaWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BazookaMissile" Collapsed="true">
+    <Position X="6.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAIAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Weapons\BazookaMissile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeaponExplosion" Collapsed="true">
+    <Position X="8.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAAAAABCAAgAAAAAAAAAAAAAAAQAAAQAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Scripts\Weapons\WeaponExplosion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CameraBillboard" Collapsed="true">
+    <Position X="10" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAACAAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Characters\CameraBillboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CharacterHealth" Collapsed="true">
+    <Position X="12" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAIACAAAAAgAAAAAAAIAEAEAAAAQAGAgCAAQAA=</HashCode>
+      <FileName>Assets\Scripts\Characters\CharacterHealth.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeshGenerator" Collapsed="true">
+    <Position X="4.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAAgQACAAAAAAAkAAgABAAAcAQAAAAAgAE=</HashCode>
+      <FileName>Assets\Scripts\Terrain\MeshGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MovableNodeContainer" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Grid\MovableNodeContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IWeapon" Collapsed="true">
+    <Position X="2.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAQAAACCAAA=</HashCode>
+      <FileName>Assets\Scripts\Weapons\IWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.Scripts.Grid.IGridManager" Collapsed="true">
+    <Position X="1" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAABIAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Grid\IGridManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="TurnSegments" Collapsed="true">
+    <Position X="12.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAACAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Turns\TurnManager.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
