@@ -45,12 +45,18 @@ public class CharacterGridMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Lock the character's position to the node the player has selected.
+    /// </summary>
     private void UpdateSetLocationOnNode()
     {
         this.CurrentNode = gridMgrInstance.GetNode(GridPosX, GridPosZ);
         this.transform.position = gridMgrInstance.GetNodeContainer(CurrentNode).gameObject.transform.position;
     }
 
+    /// <summary>
+    /// Check for input and move the character on the grid accordingly.
+    /// </summary>
     private void UpdateCheckMoveGrid()
     {
         int targetX = GridPosX, targetZ = GridPosZ;
