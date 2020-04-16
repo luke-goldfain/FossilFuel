@@ -5,9 +5,11 @@
 Fossil Fuel
 
 **Controls:**
+
 Grid:
 * __Move:__ Arrow keys
 * __Select:__ Space
+
 Slice:
 * __Move:__ Left/Right Arrow keys
 * __Aim:__ Up/Down Arrow keys
