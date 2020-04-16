@@ -13,7 +13,7 @@ Grid:
 Slice:
 * __Move:__ Left/Right Arrow keys
 * __Aim:__ Up/Down Arrow keys
-* __Fire:__ Space
+* __Fire:__ Space (hold)
 * __Jump:__ Shift
 
 **Description Short:**  
