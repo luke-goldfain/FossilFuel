@@ -23,6 +23,8 @@ public class MeshGenerator : MonoBehaviour
 
     private List<Vector3> vertsToMove;
 
+    Matrix4x4 localToWorld;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,8 @@ public class MeshGenerator : MonoBehaviour
         GenerateTerrain();
 
         UpdateTerrainMesh();
+
+        localToWorld = transform.localToWorldMatrix;
     }
 
     private void GenerateTerrain()
@@ -96,6 +100,8 @@ public class MeshGenerator : MonoBehaviour
 
         // Apply the terrain mesh to the mesh collider AFTER recalculating bounds
         mColl.sharedMesh = terrainMesh;
+
+        localToWorld = transform.localToWorldMatrix;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -106,7 +112,7 @@ public class MeshGenerator : MonoBehaviour
 
             for(int v = 0; v < verticesList.Length; v++)
             {
-                while (other.bounds.Contains(verticesList[v]))
+                while (Vector3.Distance(other.transform.position, localToWorld.MultiplyPoint3x4(verticesList[v])) < other.bounds.extents.magnitude * 0.75f)
                 {
                     verticesList[v] += Vector3.down * 0.05f;
                 }
