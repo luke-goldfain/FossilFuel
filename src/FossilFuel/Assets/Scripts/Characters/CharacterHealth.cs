@@ -18,8 +18,6 @@ public class CharacterHealth : MonoBehaviour
 
     private int currentHealth;
 
-    private UnityGridManager gridMgr;
-
     private bool dmgTextEnabled;
 
     private void Start()
@@ -32,8 +30,6 @@ public class CharacterHealth : MonoBehaviour
         dmgTextEnabled = false;
 
         initialDmgTransform = dmgText.rectTransform;
-
-        gridMgr = FindObjectOfType<UnityGridManager>();
     }
 
     private void Update()
@@ -90,6 +86,6 @@ public class CharacterHealth : MonoBehaviour
 
     private void Die()
     {
-        gridMgr.ActiveChars.Remove(this.gameObject); // At the end of the turn, this list will be used to set a character inactive
+        this.gameObject.GetComponent<UnityCharacterTurnInfo>().DataCharacter.Die(); // At the end of the turn, the character will be set inactive since its state is now "dead"
     }
 }

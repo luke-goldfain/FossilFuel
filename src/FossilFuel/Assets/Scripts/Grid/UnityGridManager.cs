@@ -28,10 +28,12 @@ public class UnityGridManager : MonoBehaviour
     private List<Vector2Int> charStartingPositions;
 
     [HideInInspector]
-    public List<GameObject> ActiveChars;
+    public List<GameObject> ActiveCharsGO;
 
     [HideInInspector]
-    public List<GameObject> AllChars;
+    public List<GameObject> AllCharsGO;
+
+    private TurnManager turnMgr;
 
     private float gridPieceD, gridPieceW;
 
@@ -81,8 +83,12 @@ public class UnityGridManager : MonoBehaviour
 
     private void StartPlaceCharacters()
     {
-        ActiveChars = new List<GameObject>();
-        AllChars = new List<GameObject>();
+        turnMgr = TurnManager.Instance;
+
+        turnMgr.InitCharacterList();
+
+        ActiveCharsGO = new List<GameObject>();
+        AllCharsGO = new List<GameObject>();
 
         bool teamOne = true;
         int charNum = 1;
@@ -90,36 +96,38 @@ public class UnityGridManager : MonoBehaviour
         // This list, populated manually in inspector, determines how many dinos to spawn and what their positions will be.
         foreach(Vector2Int pos in charStartingPositions)
         {
-            GameObject currentChar;
+            GameObject currentCharGO;
+            Character currentChar;
 
-            // Spawn a dino on a team, alternating which team's dino to spawn with a bool
+            // Spawn a dino on a team, alternating which team's dino to spawn with a bool. Also create an abstracted "character" in the turn manager
             if (teamOne)
             {
-                currentChar = Instantiate(characterOnePrefab, GetNodeContainer(GetNode(pos.x, pos.y)).gameObject.transform.position, Quaternion.identity);
+                currentCharGO = Instantiate(characterOnePrefab, GetNodeContainer(GetNode(pos.x, pos.y)).gameObject.transform.position, Quaternion.identity);
+
+                currentChar = turnMgr.CreateActiveCharacter(1, currentCharGO);
             }
             else
             {
-                currentChar = Instantiate(characterTwoPrefab, GetNodeContainer(GetNode(pos.x, pos.y)).gameObject.transform.position, Quaternion.identity);
+                currentCharGO = Instantiate(characterTwoPrefab, GetNodeContainer(GetNode(pos.x, pos.y)).gameObject.transform.position, Quaternion.identity);
+
+                currentChar = turnMgr.CreateActiveCharacter(2, currentCharGO);
             }
 
-            // Somewhat bruteforce -- If this is the first character in the list, start its turn. Gets the ball rolling; all subsequent turns will be started by TurnManager.
-            if (charStartingPositions.IndexOf(pos) == 0)
-            {
-                currentChar.GetComponent<CharacterTurnInfo>().StartTurn();
-            }
+            currentCharGO.GetComponent<CharacterGridMovement>().GridPosX = pos.x;
+            currentCharGO.GetComponent<CharacterGridMovement>().GridPosZ = pos.y;
 
-            currentChar.GetComponent<CharacterGridMovement>().GridPosX = pos.x;
-            currentChar.GetComponent<CharacterGridMovement>().GridPosZ = pos.y;
-
-            currentChar.GetComponent<CharacterTurnInfo>().CharacterNumber = charNum;
+            currentCharGO.GetComponent<UnityCharacterTurnInfo>().CharacterNumber = charNum;
 
             if (!teamOne) charNum++; // Increment character number after we've given the current number to both sides
 
-            ActiveChars.Add(currentChar); // Add to list for public reference
-            AllChars.Add(currentChar);
+            ActiveCharsGO.Add(currentCharGO); // Add to list for public reference
+            AllCharsGO.Add(currentCharGO);
 
             teamOne = !teamOne; // Alternate teams
         }
+
+        // Get the ball rolling and start index 0's turn after we're done building the lists
+        turnMgr.StartTurnByNumber(0);
     }
 
     // Update is called once per frame
@@ -173,7 +181,7 @@ public class UnityGridManager : MonoBehaviour
 
     public bool CheckIfNodeOccupied(GridMovableNode queryNode)
     {
-        foreach (GameObject c in ActiveChars)
+        foreach (GameObject c in ActiveCharsGO)
         {
             if (c.GetComponent<CharacterGridMovement>().CurrentNode == queryNode)
             {
@@ -186,7 +194,7 @@ public class UnityGridManager : MonoBehaviour
 
     public GameObject GetOccupantOfNode(GridMovableNode queryNode)
     {
-        foreach(GameObject c in ActiveChars)
+        foreach(GameObject c in ActiveCharsGO)
         {
             if (c.GetComponent<CharacterGridMovement>().CurrentNode == queryNode)
             {

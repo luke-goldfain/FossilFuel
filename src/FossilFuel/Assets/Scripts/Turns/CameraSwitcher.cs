@@ -33,9 +33,9 @@ public class CameraSwitcher : MonoBehaviour
     {
         if (turnMgr.CurrentTurnSegment == TurnSegments.sliceMovement)
         {
-            this.transform.position = Vector3.Lerp(this.transform.position, (turnMgr.MovingCharInstance.transform.position + turnMgr.MovingCharInstance.GetComponent<CharacterTurnInfo>().AttackTarget.transform.position) / 2 - this.transform.forward, lerpSpeed);
+            this.transform.position = Vector3.Lerp(this.transform.position, (turnMgr.MovingCharInstance.transform.position + turnMgr.MovingCharInstance.GetComponent<UnityCharacterTurnInfo>().AttackTarget.transform.position) / 2 - this.transform.forward, lerpSpeed);
 
-            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(Vector3.Cross(Vector3.up, turnMgr.MovingCharInstance.transform.position - turnMgr.MovingCharInstance.GetComponent<CharacterTurnInfo>().AttackTarget.transform.position), Vector3.up), lerpSpeed);
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(Vector3.Cross(Vector3.up, turnMgr.MovingCharInstance.transform.position - turnMgr.MovingCharInstance.GetComponent<UnityCharacterTurnInfo>().AttackTarget.transform.position), Vector3.up), lerpSpeed);
 
             camComponent.farClipPlane = 2f;
         }

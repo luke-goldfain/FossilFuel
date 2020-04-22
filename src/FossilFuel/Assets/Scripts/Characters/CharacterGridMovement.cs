@@ -15,7 +15,7 @@ public class CharacterGridMovement : MonoBehaviour
 
     public GridMovableNode CurrentNode;
 
-    private CharacterTurnInfo charTurnInfo;
+    private UnityCharacterTurnInfo charTurnInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -24,19 +24,19 @@ public class CharacterGridMovement : MonoBehaviour
 
         gridMgrInstance = FindObjectOfType<UnityGridManager>(); // Replace with singleton?
 
-        charTurnInfo = this.gameObject.GetComponent<CharacterTurnInfo>();
+        charTurnInfo = this.gameObject.GetComponent<UnityCharacterTurnInfo>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (charTurnInfo.CheckCurrentTurnSegment() == TurnSegments.gridMovement)
+        if (charTurnInfo.DataCharacter.CheckCurrentTurnSegment() == TurnSegments.gridMovement)
         {
             this.gameObject.transform.localScale = Vector3.Lerp(this.gameObject.transform.localScale, Vector3.one, 0.2f);
 
             UpdateSetLocationOnNode();
 
-            if (charTurnInfo.IsMoving)
+            if (charTurnInfo.DataCharacter.CurrentState == CharacterState.active)
             {
                 UpdateCheckMoveGrid();
 

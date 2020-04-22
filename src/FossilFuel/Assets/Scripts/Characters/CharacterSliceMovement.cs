@@ -10,7 +10,7 @@ public class CharacterSliceMovement : MonoBehaviour
 
     private InputHandler inputHdlr;
 
-    private CharacterTurnInfo charTurnInfo;
+    private UnityCharacterTurnInfo charTurnInfo;
 
     private CameraBillboard billboardScript;
 
@@ -45,7 +45,7 @@ public class CharacterSliceMovement : MonoBehaviour
 
         gridMgrInstance = FindObjectOfType<UnityGridManager>(); // Replace with singleton?
 
-        charTurnInfo = this.gameObject.GetComponent<CharacterTurnInfo>();
+        charTurnInfo = this.gameObject.GetComponent<UnityCharacterTurnInfo>();
 
         billboardScript = this.gameObject.GetComponent<CameraBillboard>();
 
@@ -63,14 +63,17 @@ public class CharacterSliceMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (charTurnInfo.CheckCurrentTurnSegment() == TurnSegments.sliceMovement)
+        if (charTurnInfo.DataCharacter.CheckCurrentTurnSegment() == TurnSegments.sliceMovement)
         {
             this.gameObject.transform.localScale = Vector3.Lerp(this.gameObject.transform.localScale, new Vector3(sliceScale, sliceScale, sliceScale), 0.2f);
 
-            if (charTurnInfo.IsMoving)
+            if (charTurnInfo.DataCharacter.CurrentState == CharacterState.active)
             {
                 UpdateCheckMoveSlice();
+            }
 
+            if (turnFinished)
+            {
                 UpdateCheckAdvanceTurn();
             }
         }
@@ -147,9 +150,10 @@ public class CharacterSliceMovement : MonoBehaviour
             {
                 turnEndTimer = 0f;
 
+                turnFinished = false;
+
                 // Here is where the turn ends
-                // ISSUE -- If character suicides, this will not be executed and game will be stuck
-                charTurnInfo.EndTurn();
+                charTurnInfo.DataCharacter.EndTurn();
             }
         }
     }
