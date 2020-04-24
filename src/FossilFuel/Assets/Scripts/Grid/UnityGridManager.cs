@@ -97,7 +97,7 @@ public class UnityGridManager : MonoBehaviour
         foreach(Vector2Int pos in charStartingPositions)
         {
             GameObject currentCharGO;
-            Character currentChar;
+            TurnCharacter currentChar;
 
             // Spawn a dino on a team, alternating which team's dino to spawn with a bool. Also create an abstracted "character" in the turn manager
             if (teamOne)

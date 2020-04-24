@@ -5,7 +5,7 @@ public enum CharacterState
     inactive, active, dead
 }
 
-public class Character
+public class TurnCharacter
 {
     private TurnManager turnMgr;
 
@@ -17,7 +17,7 @@ public class Character
 
     public bool WentThisTurn;
 
-    public Character(int pNum, GameObject go)
+    public TurnCharacter(int pNum, GameObject go)
     {
         PlayerNumber = pNum;
 
@@ -51,6 +51,8 @@ public class Character
     public void Die()
     {
         CurrentState = CharacterState.dead;
+
+        CharGO.GetComponent<CharacterSliceMovement>().ForceFinishSliceTurn(); // in case the character died without firing on their own turn, force the turn to end
     }
 
     public TurnSegments CheckCurrentTurnSegment()

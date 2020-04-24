@@ -158,6 +158,12 @@ public class CharacterSliceMovement : MonoBehaviour
         }
     }
 
+    public void ForceFinishSliceTurn()
+    {
+        firing = false;
+        turnFinished = true;
+    }
+
     public void RefreshSliceTurn()
     {
         firing = false;

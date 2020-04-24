@@ -15,9 +15,9 @@ public class TurnManager
     public delegate void EndGame();
     public static event EndGame NotifyOfGameEnd;
 
-    public List<Character> ActiveCharacters { get; protected set; }
-    public List<Character> TeamOneActiveChars { get; protected set; }
-    public List<Character> TeamTwoActiveChars { get; protected set; }
+    public List<TurnCharacter> ActiveCharacters { get; protected set; }
+    public List<TurnCharacter> TeamOneActiveChars { get; protected set; }
+    public List<TurnCharacter> TeamTwoActiveChars { get; protected set; }
 
     private static TurnManager turnMgrInstance;
 
@@ -47,14 +47,14 @@ public class TurnManager
 
     public TurnSegments CurrentTurnSegment;
 
-    public void EndTurn(Character ch) // take in a character and find a character on the opposite team to activate
+    public void EndTurn(TurnCharacter ch) // take in a character and find a character on the opposite team to activate
     {
         PruneDeadCharacters();
 
         // Check for characters that haven't gone this turn
         bool allCharsWent = true;
 
-        foreach(Character wCh in ActiveCharacters)
+        foreach(TurnCharacter wCh in ActiveCharacters)
         {
             if (!wCh.WentThisTurn)
             {
@@ -65,7 +65,7 @@ public class TurnManager
         if (allCharsWent) // Start a new turn! (may add more here later)
         {
             // As this is a new turn, set all chars' WentThisTurn to false
-            foreach (Character tCh in ActiveCharacters)
+            foreach (TurnCharacter tCh in ActiveCharacters)
             {
                 tCh.WentThisTurn = false;
             }
@@ -83,9 +83,9 @@ public class TurnManager
 
     private void PruneDeadCharacters()
     {
-        List<Character> charsToRemove = new List<Character>();
+        List<TurnCharacter> charsToRemove = new List<TurnCharacter>();
 
-        foreach (Character dCh in ActiveCharacters)
+        foreach (TurnCharacter dCh in ActiveCharacters)
         {
             if (dCh.CurrentState == CharacterState.dead)
             {
@@ -106,7 +106,7 @@ public class TurnManager
             }
         }
 
-        foreach (Character rCh in charsToRemove)
+        foreach (TurnCharacter rCh in charsToRemove)
         {
             ActiveCharacters.Remove(rCh);
         }
@@ -114,7 +114,7 @@ public class TurnManager
         charsToRemove.Clear();
     }
 
-    private void StartNextCharacterTurn(Character ch)
+    private void StartNextCharacterTurn(TurnCharacter ch)
     {
         int checkIndex = ActiveCharacters.IndexOf(ch) + 1;
 
@@ -123,7 +123,7 @@ public class TurnManager
             checkIndex = 0;
         }
 
-        Character lastChar = ch;
+        TurnCharacter lastChar = ch;
 
         // Get the next non-dead character with opposite player, pruning any dead ones.
         // Give up if we've cycled back to the character that just acted, or if a team is empty. Once CheckBothTeamsForActive() is called, the game will know to end.
@@ -190,14 +190,14 @@ public class TurnManager
 
     public void InitCharacterList()
     {
-        ActiveCharacters = new List<Character>();
-        TeamOneActiveChars = new List<Character>();
-        TeamTwoActiveChars = new List<Character>();
+        ActiveCharacters = new List<TurnCharacter>();
+        TeamOneActiveChars = new List<TurnCharacter>();
+        TeamTwoActiveChars = new List<TurnCharacter>();
     }
 
-    public Character CreateActiveCharacter(int pNum, GameObject go)
+    public TurnCharacter CreateActiveCharacter(int pNum, GameObject go)
     {
-        Character ch = new Character(pNum, go);
+        TurnCharacter ch = new TurnCharacter(pNum, go);
 
         ActiveCharacters.Add(ch);
 

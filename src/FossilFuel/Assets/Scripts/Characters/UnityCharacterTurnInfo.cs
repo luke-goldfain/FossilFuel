@@ -14,7 +14,7 @@ public class UnityCharacterTurnInfo : MonoBehaviour
     [HideInInspector]
     public GameObject AttackTarget;
 
-    public Character DataCharacter;
+    public TurnCharacter DataCharacter;
 
     private TurnManager turnMgr;
 

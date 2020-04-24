@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class MeshGenerator : MonoBehaviour
 {
-    Mesh terrainMesh;
-    MeshFilter mFilter;
-    MeshCollider mColl;
+    private Mesh terrainMesh;
+    private MeshFilter mFilter;
+    private MeshCollider mColl;
 
     [SerializeField, Tooltip("The minimum and maximum physical bounds of the terrain mesh.")]
     private float xMin, xMax, zMin, zMax;
