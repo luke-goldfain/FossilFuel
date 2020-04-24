@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum TurnSegments { gridMovement, attackSelection, sliceMovement };
 
-public class TurnManager : MonoBehaviour
+public class TurnManager
 {
     // observer-ish event handler for switching turns and switching to slice mode
     public delegate void SwitchPlayer();
@@ -21,18 +21,21 @@ public class TurnManager : MonoBehaviour
 
     private static TurnManager turnMgrInstance;
 
+    private static readonly object getlock = new object();
+
     public static TurnManager Instance
     {
         get
         {
-            if (turnMgrInstance == null) // This may be able to be refactored to not require a GameObject
+            lock (getlock)
             {
-                GameObject turnGO = new GameObject();
-                turnMgrInstance = turnGO.AddComponent<TurnManager>();
-                turnGO.name = "TurnManager (Runtime Singleton)";
-            }
+                if (turnMgrInstance == null) // This may be able to be refactored to not require a GameObject
+                {
+                    turnMgrInstance = new TurnManager();
+                }
 
-            return turnMgrInstance;
+                return turnMgrInstance;
+            }
         }
     }
     
@@ -173,59 +176,6 @@ public class TurnManager : MonoBehaviour
         MovingCharInstance = ActiveCharacters[charNum].CharGO;
     }
 
-    ///// <summary>
-    ///// Ensures that the character TurnManager is attempting to give control to is active, iterating through the active characters list until control is given successfully.
-    ///// </summary>
-    //private void EnsureCharIsActive()
-    //{
-    //    bool charActive = false;
-
-    //    int initiallyCheckedChar = MovingChar;
-
-    //    while (!charActive)
-    //    {
-    //        foreach (GameObject ch in gridMgr.AllCharsGO)
-    //        {
-    //            if (gridMgr.ActiveCharsGO.Contains(ch))
-    //            {
-    //                UnityCharacterTurnInfo chTurnInfo = ch.GetComponent<UnityCharacterTurnInfo>();
-
-    //                if (chTurnInfo.CharacterNumber == MovingChar && chTurnInfo.PlayerNumber == MovingPlayer)
-    //                {
-    //                    charActive = true;
-
-    //                    return;
-    //                }
-    //            }
-    //            else
-    //            {
-    //                // Set characters inactive that are no longer in the ActiveChars list
-    //                ch.SetActive(false); // TODO: Add gravestone, maybe death animation
-    //            }
-    //        }
-
-    //        // Iterate thru the list if we haven't found an active character yet
-    //        if (!charActive)
-    //        {
-    //            MovingChar++;
-
-    //            if (MovingChar > gridMgr.AllCharsGO.Count / 2)
-    //            {
-    //                MovingChar = 1;
-    //            }
-
-    //            if (MovingChar == initiallyCheckedChar) 
-    //            {
-    //                // Placeholder switch to other player
-    //                MovingPlayer = MovingPlayer == 1 ? 2 : 1;
-
-    //                // Notify all observers of NotifyOfGameEnd that a player has won, and the game is over
-    //                NotifyOfGameEnd?.Invoke();
-    //            }
-    //        }
-    //    }
-    //}
-
     /// <summary>
     /// Checks whether both teams still have an active character. If they don't, notifies subscribers that the game is over.
     /// </summary>
@@ -264,3 +214,56 @@ public class TurnManager : MonoBehaviour
         return ch;
     }
 }
+
+///// <summary>
+///// Ensures that the character TurnManager is attempting to give control to is active, iterating through the active characters list until control is given successfully.
+///// </summary>
+//private void EnsureCharIsActive()
+//{
+//    bool charActive = false;
+
+//    int initiallyCheckedChar = MovingChar;
+
+//    while (!charActive)
+//    {
+//        foreach (GameObject ch in gridMgr.AllCharsGO)
+//        {
+//            if (gridMgr.ActiveCharsGO.Contains(ch))
+//            {
+//                UnityCharacterTurnInfo chTurnInfo = ch.GetComponent<UnityCharacterTurnInfo>();
+
+//                if (chTurnInfo.CharacterNumber == MovingChar && chTurnInfo.PlayerNumber == MovingPlayer)
+//                {
+//                    charActive = true;
+
+//                    return;
+//                }
+//            }
+//            else
+//            {
+//                // Set characters inactive that are no longer in the ActiveChars list
+//                ch.SetActive(false); // TODO: Add gravestone, maybe death animation
+//            }
+//        }
+
+//        // Iterate thru the list if we haven't found an active character yet
+//        if (!charActive)
+//        {
+//            MovingChar++;
+
+//            if (MovingChar > gridMgr.AllCharsGO.Count / 2)
+//            {
+//                MovingChar = 1;
+//            }
+
+//            if (MovingChar == initiallyCheckedChar) 
+//            {
+//                // Placeholder switch to other player
+//                MovingPlayer = MovingPlayer == 1 ? 2 : 1;
+
+//                // Notify all observers of NotifyOfGameEnd that a player has won, and the game is over
+//                NotifyOfGameEnd?.Invoke();
+//            }
+//        }
+//    }
+//}
