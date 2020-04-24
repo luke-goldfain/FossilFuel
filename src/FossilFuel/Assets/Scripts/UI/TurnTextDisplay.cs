@@ -37,14 +37,13 @@ public class TurnTextDisplay : MonoBehaviour
     {
         TurnManager.NotifyOfSwitch -= UpdateTurnText;
 
-        switch (turnMgr.MovingPlayer)
+        if (turnMgr.TeamOneActiveChars.Count > 0)
         {
-            case 1:
-                textMesh.text = "T-rex wins!";
-                break;
-            case 2:
-                textMesh.text = "Tricera wins!";
-                break;
+            textMesh.text = "t-rex wins!";
+        }
+        else
+        {
+            textMesh.text = "tricera wins!";
         }
     }
 }

@@ -15,9 +15,9 @@ public class TurnManager : MonoBehaviour
     public delegate void EndGame();
     public static event EndGame NotifyOfGameEnd;
 
-    public List<Character> ActiveCharacters;
-    private List<Character> teamOneActiveChars;
-    private List<Character> teamTwoActiveChars;
+    public List<Character> ActiveCharacters { get; protected set; }
+    public List<Character> TeamOneActiveChars { get; protected set; }
+    public List<Character> TeamTwoActiveChars { get; protected set; }
 
     private static TurnManager turnMgrInstance;
 
@@ -46,6 +46,8 @@ public class TurnManager : MonoBehaviour
 
     public void EndTurn(Character ch) // take in a character and find a character on the opposite team to activate
     {
+        PruneDeadCharacters();
+
         // Check for characters that haven't gone this turn
         bool allCharsWent = true;
 
@@ -76,6 +78,39 @@ public class TurnManager : MonoBehaviour
         CheckBothTeamsForActive();
     }
 
+    private void PruneDeadCharacters()
+    {
+        List<Character> charsToRemove = new List<Character>();
+
+        foreach (Character dCh in ActiveCharacters)
+        {
+            if (dCh.CurrentState == CharacterState.dead)
+            {
+                switch (dCh.PlayerNumber)
+                {
+                    case 1:
+                        TeamOneActiveChars.Remove(dCh);
+                        break;
+                    case 2:
+                        TeamTwoActiveChars.Remove(dCh);
+                        break;
+                }
+
+                // TODO: Death animation, gravestone, etc?
+                dCh.CharGO.SetActive(false);
+
+                charsToRemove.Add(dCh);
+            }
+        }
+
+        foreach (Character rCh in charsToRemove)
+        {
+            ActiveCharacters.Remove(rCh);
+        }
+
+        charsToRemove.Clear();
+    }
+
     private void StartNextCharacterTurn(Character ch)
     {
         int checkIndex = ActiveCharacters.IndexOf(ch) + 1;
@@ -89,7 +124,7 @@ public class TurnManager : MonoBehaviour
 
         // Get the next non-dead character with opposite player, pruning any dead ones.
         // Give up if we've cycled back to the character that just acted, or if a team is empty. Once CheckBothTeamsForActive() is called, the game will know to end.
-        while (ActiveCharacters[checkIndex] != lastChar && teamOneActiveChars.Count > 0 && teamTwoActiveChars.Count > 0)
+        while (ActiveCharacters[checkIndex] != lastChar && TeamOneActiveChars.Count > 0 && TeamTwoActiveChars.Count > 0)
         {
             if (checkIndex < ActiveCharacters.Count)
             {
@@ -104,10 +139,10 @@ public class TurnManager : MonoBehaviour
                     switch (ActiveCharacters[checkIndex].PlayerNumber)
                     {
                         case 1:
-                            teamOneActiveChars.Remove(ActiveCharacters[checkIndex]);
+                            TeamOneActiveChars.Remove(ActiveCharacters[checkIndex]);
                             break;
                         case 2:
-                            teamTwoActiveChars.Remove(ActiveCharacters[checkIndex]);
+                            TeamTwoActiveChars.Remove(ActiveCharacters[checkIndex]);
                             break;
                     }
 
@@ -196,7 +231,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void CheckBothTeamsForActive()
     {
-        if (teamOneActiveChars.Count == 0 || teamTwoActiveChars.Count == 0)
+        if (TeamOneActiveChars.Count == 0 || TeamTwoActiveChars.Count == 0)
         {
             // Notify all observers of NotifyOfGameEnd that a player has won, and the game is over
             NotifyOfGameEnd?.Invoke();
@@ -206,8 +241,8 @@ public class TurnManager : MonoBehaviour
     public void InitCharacterList()
     {
         ActiveCharacters = new List<Character>();
-        teamOneActiveChars = new List<Character>();
-        teamTwoActiveChars = new List<Character>();
+        TeamOneActiveChars = new List<Character>();
+        TeamTwoActiveChars = new List<Character>();
     }
 
     public Character CreateActiveCharacter(int pNum, GameObject go)
@@ -219,10 +254,10 @@ public class TurnManager : MonoBehaviour
         switch (pNum)
         {
             case 1:
-                teamOneActiveChars.Add(ch);
+                TeamOneActiveChars.Add(ch);
                 break;
             case 2:
-                teamTwoActiveChars.Add(ch);
+                TeamTwoActiveChars.Add(ch);
                 break;
         }
 
