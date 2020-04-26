@@ -21,6 +21,7 @@ public class MeshGenerator : MonoBehaviour
     private int zVertices = 50;
 
     private Vector3[] verticesList;
+    private Vector3[,] verts2DList;
 
     private int[] trisList;
 
@@ -54,6 +55,7 @@ public class MeshGenerator : MonoBehaviour
     private void GenerateTerrain()
     {
         verticesList = new Vector3[(xVertices + 1) * (zVertices + 1)];
+        verts2DList = new Vector3[xVertices + 1, zVertices + 1];
 
         float prevYVal = 0.75f;
         int i = 0;
@@ -61,11 +63,20 @@ public class MeshGenerator : MonoBehaviour
         {
             for (float x = 0; x <= xVertices; x++)
             {
-                float yVal = prevYVal + UnityEngine.Random.Range(-0.05f, 0.05f);
-                yVal = Mathf.Clamp(yVal, .5f, 1f);
-                prevYVal = yVal;
+                int choice = UnityEngine.Random.Range(0, 2);
+
+                if (z > 0 && x > 0) prevYVal = choice == 0 ? verts2DList[(int)x, (int)z - 1].y : verts2DList[(int)x - 1, (int)z].y;
+                else if (z > 0 && x <= 0) prevYVal = verts2DList[(int)x, (int)z - 1].y;
+                else if (x > 0 && z <= 0) prevYVal = verts2DList[(int)x - 1, (int)z].y;
+
+                float yVal = prevYVal + UnityEngine.Random.Range(-0.1f, 0.1f);
+                yVal = Mathf.Clamp(yVal, .5f, 3f);
+                //prevYVal = yVal;
 
                 verticesList[i] = new Vector3(xMin + (x / xVertices * (xMax - xMin)), yVal, zMin + (z / zVertices * (zMax - zMin)));
+
+                verts2DList[(int)x, (int)z] = verticesList[i];
+
                 i++;
             }
         }
