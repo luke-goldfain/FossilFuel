@@ -9,6 +9,9 @@ public class MeshGenerator : MonoBehaviour
     private MeshFilter mFilter;
     private MeshCollider mColl;
 
+    [SerializeField]
+    Material meshMaterial;
+
     [SerializeField, Tooltip("The minimum and maximum physical bounds of the terrain mesh.")]
     private float xMin, xMax, zMin, zMax;
 
@@ -36,6 +39,8 @@ public class MeshGenerator : MonoBehaviour
         mFilter = this.gameObject.GetComponent<MeshFilter>();
 
         mColl = this.gameObject.GetComponent<MeshCollider>();
+
+        GetComponent<MeshRenderer>().material = meshMaterial;
 
         mFilter.mesh = terrainMesh;
 
