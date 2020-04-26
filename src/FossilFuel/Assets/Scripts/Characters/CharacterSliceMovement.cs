@@ -81,6 +81,8 @@ public class CharacterSliceMovement : MonoBehaviour
 
     private void UpdateCheckMoveSlice() 
     {
+        currentWeapon.GetComponent<AbstractWeapon>().CrosshairGO.SetActive(true);
+
         if (inputHdlr.RightKeyHeld && !firing && onGround)
         {
             rb.velocity = this.transform.right;
@@ -104,12 +106,12 @@ public class CharacterSliceMovement : MonoBehaviour
 
         if (inputHdlr.UpKeyHeld)
         {
-            currentWeapon.GetComponent<BazookaWeapon>().RotateUp(); // TODO: Reference this script abstractly somehow to account for different weapons
+            currentWeapon.GetComponent<AbstractWeapon>().RotateUp(); // TODO: Reference this script abstractly somehow to account for different weapons
         }
 
         if (inputHdlr.DownKeyHeld)
         {
-            currentWeapon.GetComponent<BazookaWeapon>().RotateDown(); // TODO: Reference this script abstractly somehow to account for different weapons
+            currentWeapon.GetComponent<AbstractWeapon>().RotateDown(); // TODO: Reference this script abstractly somehow to account for different weapons
         }
 
         if (inputHdlr.ChoiceKeyDown && !hasFired)
@@ -120,7 +122,7 @@ public class CharacterSliceMovement : MonoBehaviour
 
         if (inputHdlr.ChoiceKeyHeld && firing)
         {
-            currentWeapon.GetComponent<BazookaWeapon>().ChargeShot(); // TODO: Reference this script abstractly somehow to account for different weapons
+            currentWeapon.GetComponent<AbstractWeapon>().ChargeShot(); // TODO: Reference this script abstractly somehow to account for different weapons
         }
 
         if (inputHdlr.ChoiceKeyUp && firing)
@@ -128,7 +130,7 @@ public class CharacterSliceMovement : MonoBehaviour
             firing = false;
             turnFinished = true;
 
-            currentWeapon.GetComponent<BazookaWeapon>().Fire(); // TODO: Reference this script abstractly somehow to account for different weapons
+            currentWeapon.GetComponent<AbstractWeapon>().Fire(); // TODO: Reference this script abstractly somehow to account for different weapons
         }
     }
 
@@ -144,6 +146,8 @@ public class CharacterSliceMovement : MonoBehaviour
     {
         if (turnFinished)
         {
+            currentWeapon.GetComponent<AbstractWeapon>().CrosshairGO.SetActive(false);
+
             turnEndTimer += Time.deltaTime;
 
             if (turnEndTimer >= turnEndTime)

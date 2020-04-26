@@ -14,14 +14,6 @@ public class BazookaWeapon : AbstractWeapon
         projectileSpawn = this.transform.position + this.transform.right * 0.4f;
     }
 
-    public void ChargeShot()
-    {
-        if (shootPower < MaxShootPower)
-        {
-            shootPower += ShootPowerIncrement;
-        }
-    }
-
     public override void Fire()
     {
         currentProjectile = Instantiate(projectilePrefab, this.transform);

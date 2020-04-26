@@ -40,11 +40,13 @@
 
 			void mycolor(Input IN, SurfaceOutput o, inout fixed4 color)
 			{
-				float cameraDistx = length(IN.worldPos.x - _WorldSpaceCameraPos.x);
+				float cameraDistxz = length(IN.worldPos.xz - _WorldSpaceCameraPos.xz);
 				float cameraDisty = length(IN.worldPos.y - _WorldSpaceCameraPos.y);
 				float cameraDistz = length(IN.worldPos.z - _WorldSpaceCameraPos.z);
 
-				if (IN.viewDir.y < .5)
+				float ang = dot(normalize(IN.worldPos.xz - _WorldSpaceCameraPos.xz), IN.viewDir);
+
+				if (IN.viewDir.y < .5 && ang > -.2 && ang < .2)
 				{
 					color.xyz = 0;
 				}

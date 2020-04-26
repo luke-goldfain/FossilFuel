@@ -1136,6 +1136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2cd6bc4e035bf4286a067316558be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   xMin: -8
   xMax: 8
   zMin: -9
