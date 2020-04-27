@@ -17,14 +17,25 @@ public class CharacterGridMovement : MonoBehaviour
 
     private UnityCharacterTurnInfo charTurnInfo;
 
-    // Start is called before the first frame update
-    void Start()
+    public List<GridMovableNode> MovableNodes;
+
+    private bool movableIdentified;
+
+    private void Awake()
     {
         inputHdlr = InputHandler.Instance; // TODO: Replace with command pattern
 
         gridMgrInstance = FindObjectOfType<UnityGridManager>(); // Replace with singleton?
 
         charTurnInfo = this.gameObject.GetComponent<UnityCharacterTurnInfo>();
+
+        MovableNodes = new List<GridMovableNode>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
@@ -50,7 +61,6 @@ public class CharacterGridMovement : MonoBehaviour
     /// </summary>
     private void UpdateSetLocationOnNode()
     {
-        this.CurrentNode = gridMgrInstance.GetNode(GridPosX, GridPosZ);
         this.transform.position = gridMgrInstance.GetNodeContainer(CurrentNode).gameObject.transform.position;
     }
 
@@ -82,12 +92,12 @@ public class CharacterGridMovement : MonoBehaviour
 
         targetNode = gridMgrInstance.GetNode(targetX, targetZ);
 
-        if (targetNode != null && gridMgrInstance.GetOccupantOfNode(targetNode) == null)
+        if (targetNode != null && gridMgrInstance.GetOccupantOfNode(targetNode) == null && MovableNodes.Contains(targetNode))
         {
             GridPosX = targetX;
             GridPosZ = targetZ;
 
-            CurrentNode = targetNode;
+            SetCurrentNode();
         }
     }
 
@@ -97,5 +107,15 @@ public class CharacterGridMovement : MonoBehaviour
         {
             charTurnInfo.AdvanceCurrentTurnSegment();
         }
+    }
+
+    public void SetCurrentNode()
+    {
+        this.CurrentNode = gridMgrInstance.GetNode(GridPosX, GridPosZ);
+    }
+
+    public void RefreshGridTurn()
+    {
+        this.MovableNodes.Clear();
     }
 }

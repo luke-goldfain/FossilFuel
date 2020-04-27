@@ -38,6 +38,8 @@ public class TurnManager
             }
         }
     }
+
+    private UnityGridManager gridMgr;
     
     public int MovingPlayer = 1;
 
@@ -84,6 +86,7 @@ public class TurnManager
     private void PruneDeadCharacters()
     {
         List<TurnCharacter> charsToRemove = new List<TurnCharacter>();
+        List<GameObject> charsGOToRemove = new List<GameObject>();
 
         foreach (TurnCharacter dCh in ActiveCharacters)
         {
@@ -103,12 +106,14 @@ public class TurnManager
                 dCh.CharGO.SetActive(false);
 
                 charsToRemove.Add(dCh);
+                charsGOToRemove.Add(dCh.CharGO);
             }
         }
 
         foreach (TurnCharacter rCh in charsToRemove)
         {
             ActiveCharacters.Remove(rCh);
+            gridMgr.ActiveCharsGO.Remove(rCh.CharGO); // Really should move ActiveCharsGO to here probably
         }
 
         charsToRemove.Clear();
@@ -171,6 +176,10 @@ public class TurnManager
     {
         ActiveCharacters[charNum].StartTurn();
 
+        ActiveCharacters[charNum].CharGO.GetComponent<CharacterGridMovement>().SetCurrentNode(); // Ensure char's current node is set
+        ActiveCharacters[charNum].CharGO.GetComponent<CharacterGridMovement>().RefreshGridTurn();
+        gridMgr.IdentifyMovableNodes(ActiveCharacters[charNum]); // this has a functional dependency on the queried character having a "CurrentNode"
+
         MovingPlayer = ActiveCharacters[charNum].PlayerNumber;
 
         MovingCharInstance = ActiveCharacters[charNum].CharGO;
@@ -193,6 +202,11 @@ public class TurnManager
         ActiveCharacters = new List<TurnCharacter>();
         TeamOneActiveChars = new List<TurnCharacter>();
         TeamTwoActiveChars = new List<TurnCharacter>();
+    }
+
+    public void AssignGridManager(UnityGridManager gm)
+    {
+        this.gridMgr = gm;
     }
 
     public TurnCharacter CreateActiveCharacter(int pNum, GameObject go)

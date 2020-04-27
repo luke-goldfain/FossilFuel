@@ -18,6 +18,17 @@ public class UnityGridManager : MonoBehaviour
     [SerializeField, Tooltip("The depth/width in grid pieces of the grid")]
     private int gridDepth, gridWidth;
 
+    [SerializeField, Tooltip("The material for an unreachable node, to be assigned on each character's turn.")]
+    private Material unreachableMaterial;
+
+    [SerializeField, Tooltip("The material for a reachable node, to be assigned on each character's turn.")]
+    private Material reachableMaterial;
+
+
+
+    [SerializeField, Tooltip("The number of spaces a character can move on their turn. Calculated using cardinal directions.")]
+    private int moveDistance;
+
     [SerializeField, Tooltip("The prefab for character one")]
     private GameObject characterOnePrefab;
 
@@ -55,20 +66,21 @@ public class UnityGridManager : MonoBehaviour
         gridPieceD = 2.55f; // depth (z-scale) of a grid piece
         gridPieceW = 2.05f; // width (x-scale) of a grid piece
 
+        // Center this on the grid to position pieces based on this position
         this.gameObject.transform.position = new Vector3(-(gridPieceW * gridWidth * 0.5f), 0f, -(gridPieceD * gridDepth * 0.5f));
 
-        for (int i = 0; i < gridDepth; i++)
+        for (int z = 0; z < gridDepth; z++)
         {
-            for (int j = 0; j < gridWidth; j++)
+            for (int x = 0; x < gridWidth; x++)
             {
                 GameObject currentGridPiece;
-                GridMovableNode currentNode = new GridMovableNode(j, i);
+                GridMovableNode currentNode = new GridMovableNode(x, z);
 
                 nodeList.Add(currentNode);
 
-                gridPieceList.Add(currentGridPiece = Instantiate(gridPiecePrefab, this.transform.position + new Vector3(((0.5f * gridPieceW) + (j * gridPieceW)), 0f, (0.5f * gridPieceD) + (i * gridPieceD)), Quaternion.identity));
+                gridPieceList.Add(currentGridPiece = Instantiate(gridPiecePrefab, this.transform.position + new Vector3(((0.5f * gridPieceW) + (x * gridPieceW)), 0f, (0.5f * gridPieceD) + (z * gridPieceD)), Quaternion.identity));
 
-                currentGridPiece.GetComponentInChildren<MovableNodeContainer>().AssignedNode = currentNode;
+                currentGridPiece.GetComponentInChildren<UnityMovableNodeContainer>().AssignedNode = currentNode;
             }
         }
 
@@ -76,7 +88,7 @@ public class UnityGridManager : MonoBehaviour
         {
             foreach (GridMovableNode n2 in nodeList)
             {
-                n2.MatchUpNeighbors(n1);
+                n1.MatchUpNeighbors(n2);
             }
         }
     }
@@ -86,6 +98,7 @@ public class UnityGridManager : MonoBehaviour
         turnMgr = TurnManager.Instance;
 
         turnMgr.InitCharacterList();
+        turnMgr.AssignGridManager(this);
 
         ActiveCharsGO = new List<GameObject>();
         AllCharsGO = new List<GameObject>();
@@ -113,8 +126,12 @@ public class UnityGridManager : MonoBehaviour
                 currentChar = turnMgr.CreateActiveCharacter(2, currentCharGO);
             }
 
-            currentCharGO.GetComponent<CharacterGridMovement>().GridPosX = pos.x;
-            currentCharGO.GetComponent<CharacterGridMovement>().GridPosZ = pos.y;
+            CharacterGridMovement currentCharGridMov = currentCharGO.GetComponent<CharacterGridMovement>();
+
+            currentCharGridMov.GridPosX = pos.x;
+            currentCharGridMov.GridPosZ = pos.y;
+
+            currentCharGridMov.SetCurrentNode();
 
             currentCharGO.GetComponent<UnityCharacterTurnInfo>().CharacterNumber = charNum;
 
@@ -128,12 +145,6 @@ public class UnityGridManager : MonoBehaviour
 
         // Get the ball rolling and start index 0's turn after we're done building the lists
         turnMgr.StartTurnByNumber(0);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     /// <summary>
@@ -164,19 +175,17 @@ public class UnityGridManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public MovableNodeContainer GetNodeContainer(GridMovableNode node)
+    public UnityMovableNodeContainer GetNodeContainer(GridMovableNode node)
     {
-        MovableNodeContainer returnContainer = gridPieceList[0].GetComponentInChildren<MovableNodeContainer>();
-
         foreach(GameObject cont in gridPieceList)
         {
-            if(cont.GetComponentInChildren<MovableNodeContainer>().AssignedNode == node)
+            if(cont.GetComponentInChildren<UnityMovableNodeContainer>().AssignedNode == node)
             {
-                returnContainer = cont.GetComponentInChildren<MovableNodeContainer>();
+                return cont.GetComponentInChildren<UnityMovableNodeContainer>();
             }
         }
 
-        return returnContainer;
+        return null;
     }
 
     public bool CheckIfNodeOccupied(GridMovableNode queryNode)
@@ -203,5 +212,53 @@ public class UnityGridManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void IdentifyMovableNodes(TurnCharacter ch)
+    {
+        CharacterGridMovement gm = ch.CharGO.GetComponent<CharacterGridMovement>();
+
+        GridMovableNode currentN = gm.CurrentNode;
+
+        gm.MovableNodes.Add(currentN);
+
+        foreach (GridMovableNode n in currentN.AllNeighborNodes)
+        {
+            if (!CheckIfNodeOccupied(n))
+            {
+                if (!gm.MovableNodes.Contains(n))
+                {
+                    gm.MovableNodes.Add(n);
+                }
+
+                for (int i = 1; i < this.moveDistance; i++)
+                {
+                    foreach (GridMovableNode ni in n.AllNeighborNodes)
+                    {
+                        if (!gm.MovableNodes.Contains(ni))
+                        {
+                            gm.MovableNodes.Add(ni);
+                        }
+                    }
+                }
+            }
+        }
+
+        AssignNodeMatsFromCharacter(gm);
+    }
+
+    public void AssignNodeMatsFromCharacter(CharacterGridMovement gm)
+    {
+        foreach (GridMovableNode na in nodeList)
+        {
+            if (gm.MovableNodes.Contains(na))
+            {
+                GetNodeContainer(na).SetVisualBarriersMaterial(reachableMaterial);
+            }
+            else
+            {
+                GetNodeContainer(na).SetVisualBarriersMaterial(unreachableMaterial);
+            }
+        }
     }
 }
