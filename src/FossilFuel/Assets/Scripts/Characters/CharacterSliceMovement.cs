@@ -19,14 +19,21 @@ public class CharacterSliceMovement : MonoBehaviour
     [SerializeField, Tooltip("The scale to shrink to compared to grid size when in slice mode."), Range(0f, 1f)]
     private float sliceScale;
 
+    private Vector3 sliceScaleV3;
+
+    [SerializeField]
+    private float jumpForce = 5f;
+
     [SerializeField]
     private GameObject bazookaPrefab; // TODO: Replace with some kind of loading
 
     [HideInInspector]
     public GameObject currentWeapon; // TODO: add ability to switch weapons
 
-    [SerializeField]
-    private float jumpForce = 5f;
+    [SerializeField, Tooltip("The prefab for boundaries to be placed when in slice mode.")]
+    private GameObject boundPrefab;
+
+    private bool oneTimeActionsExecuted;
 
     private bool firing;
     private bool hasFired;
@@ -37,6 +44,8 @@ public class CharacterSliceMovement : MonoBehaviour
 
     private float turnEndTime = 4f;
     private float turnEndTimer;
+
+    private CharacterBoundsDisplayer boundsDisp;
 
     // Start is called before the first frame update
     void Start()
@@ -51,13 +60,13 @@ public class CharacterSliceMovement : MonoBehaviour
 
         rb = this.gameObject.GetComponent<Rigidbody>();
 
+        boundsDisp = new CharacterBoundsDisplayer();
+
         currentWeapon = Instantiate(bazookaPrefab, this.transform);
 
-        firing = false;
-        hasFired = false;
-        onGround = false;
-        turnFinished = false;
-        turnEndTimer = 0f;
+        sliceScaleV3 = new Vector3(sliceScale, sliceScale, sliceScale);
+
+        RefreshSliceTurn();
     }
 
     // Update is called once per frame
@@ -65,7 +74,17 @@ public class CharacterSliceMovement : MonoBehaviour
     {
         if (charTurnInfo.DataCharacter.CheckCurrentTurnSegment() == TurnSegments.sliceMovement)
         {
-            this.gameObject.transform.localScale = Vector3.Lerp(this.gameObject.transform.localScale, new Vector3(sliceScale, sliceScale, sliceScale), 0.2f);
+            if (this.gameObject.transform.localScale != sliceScaleV3)
+            {
+                this.gameObject.transform.localScale = Vector3.Lerp(this.gameObject.transform.localScale, sliceScaleV3, 0.2f);
+            }
+            else if (!oneTimeActionsExecuted)
+            {
+                boundsDisp.DisplayBounds(this.gameObject.transform, boundPrefab);
+
+                oneTimeActionsExecuted = true;
+            }
+
 
             if (charTurnInfo.DataCharacter.CurrentState == CharacterState.active)
             {
@@ -142,6 +161,22 @@ public class CharacterSliceMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (!inputHdlr.JumpKeyHeld && Physics.Raycast(this.transform.position, Vector3.down, out RaycastHit hit, 0.3f, ~(1 << 8)))
+        {
+            onGround = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (!Physics.Raycast(this.transform.position, Vector3.down, out RaycastHit hit, 0.3f, ~(1 << 8)))
+        {
+            onGround = false;
+        }
+    }
+
     private void UpdateCheckAdvanceTurn()
     {
         if (turnFinished)
@@ -155,6 +190,8 @@ public class CharacterSliceMovement : MonoBehaviour
                 turnEndTimer = 0f;
 
                 turnFinished = false;
+
+                boundsDisp.RemoveBounds();
 
                 // Here is where the turn ends
                 charTurnInfo.DataCharacter.EndTurn();
@@ -170,6 +207,7 @@ public class CharacterSliceMovement : MonoBehaviour
 
     public void RefreshSliceTurn()
     {
+        oneTimeActionsExecuted = false;
         firing = false;
         hasFired = false;
         onGround = false;

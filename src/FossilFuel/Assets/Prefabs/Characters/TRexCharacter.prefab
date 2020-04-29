@@ -135,7 +135,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerNumber: 1
   CharacterNumber: 1
-  IsMoving: 0
   AttackTarget: {fileID: 0}
 --- !u!114 &6051645307843992724
 MonoBehaviour:
@@ -180,10 +179,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliceScale: 0.2
+  jumpForce: 5
   bazookaPrefab: {fileID: 8307897057050297091, guid: df729be200824c646a9a13db6bd2848d,
     type: 3}
   currentWeapon: {fileID: 0}
-  jumpForce: 5
+  boundPrefab: {fileID: 83998909800436519, guid: 5ea2e303d58752741bd7bbb955dfa060,
+    type: 3}
 --- !u!54 &5622626658296186596
 Rigidbody:
   m_ObjectHideFlags: 0

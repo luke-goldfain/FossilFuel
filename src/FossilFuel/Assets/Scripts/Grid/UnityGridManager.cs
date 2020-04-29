@@ -261,4 +261,12 @@ public class UnityGridManager : MonoBehaviour
             }
         }
     }
+
+    public void SetAllNodeMatsActive(bool active)
+    {
+        foreach (GridMovableNode gm in nodeList)
+        {
+            GetNodeContainer(gm).SetVisualBarriersActive(active);
+        }
+    }
 }

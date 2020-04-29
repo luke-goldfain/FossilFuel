@@ -25,7 +25,7 @@ public class UnityCharacterTurnInfo : MonoBehaviour
 
     public void AdvanceCurrentTurnSegment()
     {
-        turnMgr.CurrentTurnSegment++;
+        turnMgr.AdvanceCurrentTurnSegment();
 
         // HACK: InputHandler update isn't being called before the next time it's asked for ChoiceKeyDown and the rest,
         // so this forces that false.

@@ -47,7 +47,7 @@ public class TurnManager
 
     public GameObject MovingCharInstance;
 
-    public TurnSegments CurrentTurnSegment;
+    public TurnSegments CurrentTurnSegment { get; private set; }
 
     public void EndTurn(TurnCharacter ch) // take in a character and find a character on the opposite team to activate
     {
@@ -74,8 +74,6 @@ public class TurnManager
         }
 
         StartNextCharacterTurn(ch);
-
-        CurrentTurnSegment = TurnSegments.gridMovement;
 
         // Notify all observers of NotifyOfSwitch that the player has been switched
         NotifyOfSwitch?.Invoke();
@@ -174,6 +172,10 @@ public class TurnManager
 
     public void StartTurnByNumber(int charNum)
     {
+        CurrentTurnSegment = TurnSegments.gridMovement;
+        
+        gridMgr.SetAllNodeMatsActive(true);
+
         ActiveCharacters[charNum].StartTurn();
 
         ActiveCharacters[charNum].CharGO.GetComponent<CharacterGridMovement>().SetCurrentNode(); // Ensure char's current node is set
@@ -226,6 +228,21 @@ public class TurnManager
         }
 
         return ch;
+    }
+
+    public void AdvanceCurrentTurnSegment()
+    {
+        CurrentTurnSegment++;
+
+        switch (CurrentTurnSegment)
+        {
+            case (TurnSegments.attackSelection):
+
+                break;
+            case (TurnSegments.sliceMovement):
+                gridMgr.SetAllNodeMatsActive(false);
+                break;
+        }
     }
 }
 

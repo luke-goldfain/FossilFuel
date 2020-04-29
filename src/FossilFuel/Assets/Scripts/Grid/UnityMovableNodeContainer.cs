@@ -17,4 +17,12 @@ public class UnityMovableNodeContainer : MonoBehaviour
             b.GetComponent<Renderer>().material = m;
         }
     }
+
+    public void SetVisualBarriersActive(bool active)
+    {
+        foreach (GameObject b in visualBarriers)
+        {
+            b.SetActive(active);
+        }
+    }
 }
