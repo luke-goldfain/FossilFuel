@@ -25,10 +25,14 @@ public class CharacterSliceMovement : MonoBehaviour
     private float jumpForce = 5f;
 
     [SerializeField]
-    private GameObject bazookaPrefab; // TODO: Replace with some kind of loading
+    private List<GameObject> weaponPrefabsList;
+
+    private List<GameObject> weaponInstancesList;
 
     [HideInInspector]
-    public GameObject currentWeapon; // TODO: add ability to switch weapons
+    public GameObject CurrentWeapon; // TODO: add ability to switch weapons
+
+    private int currentWeaponIndex;
 
     [SerializeField, Tooltip("The prefab for boundaries to be placed when in slice mode.")]
     private GameObject boundPrefab;
@@ -42,7 +46,7 @@ public class CharacterSliceMovement : MonoBehaviour
 
     private bool turnFinished;
 
-    private float turnEndTime = 4f;
+    private float turnEndTime = 7f;
     private float turnEndTimer;
 
     private CharacterBoundsDisplayer boundsDisp;
@@ -62,11 +66,35 @@ public class CharacterSliceMovement : MonoBehaviour
 
         boundsDisp = new CharacterBoundsDisplayer();
 
-        currentWeapon = Instantiate(bazookaPrefab, this.transform);
+        StartInitWeapons();
 
         sliceScaleV3 = new Vector3(sliceScale, sliceScale, sliceScale);
 
         RefreshSliceTurn();
+    }
+
+    private void StartInitWeapons()
+    {
+        weaponInstancesList = new List<GameObject>();
+
+        // Instantiate each of the weapons in the prefab list, adding them to an instances list
+        foreach (GameObject w in weaponPrefabsList)
+        {
+            weaponInstancesList.Add(Instantiate(w, this.transform));
+        }
+
+        // Set all except the first weapon inactive
+        foreach (GameObject w in weaponInstancesList)
+        {
+            if (weaponInstancesList.IndexOf(w) != 0)
+            {
+                w.SetActive(false);
+            }
+        }
+
+        // Set the current weapon as the active weapon
+        CurrentWeapon = weaponInstancesList[0];
+        currentWeaponIndex = 0;
     }
 
     // Update is called once per frame
@@ -100,7 +128,9 @@ public class CharacterSliceMovement : MonoBehaviour
 
     private void UpdateCheckMoveSlice() 
     {
-        currentWeapon.GetComponent<AbstractWeapon>().CrosshairGO.SetActive(true);
+        AbstractWeapon currentWeaponScript = CurrentWeapon.GetComponent<AbstractWeapon>();
+
+        currentWeaponScript.CrosshairGO.SetActive(true);
 
         if (inputHdlr.RightKeyHeld && !firing && onGround)
         {
@@ -123,14 +153,38 @@ public class CharacterSliceMovement : MonoBehaviour
             onGround = false;
         }
 
+        if (inputHdlr.ChoiceBackKeyDown && !hasFired)
+        {
+            currentWeaponIndex--;
+
+            if (currentWeaponIndex < 0)
+            {
+                currentWeaponIndex = weaponInstancesList.Count - 1;
+            }
+
+            SwitchToWeapon(currentWeaponIndex);
+        }
+
+        if (inputHdlr.ChoiceFwdKeyDown && !hasFired)
+        {
+            currentWeaponIndex++;
+
+            if (currentWeaponIndex >= weaponInstancesList.Count)
+            {
+                currentWeaponIndex = 0;
+            }
+
+            SwitchToWeapon(currentWeaponIndex);
+        }
+
         if (inputHdlr.UpKeyHeld)
         {
-            currentWeapon.GetComponent<AbstractWeapon>().RotateUp(); // TODO: Reference this script abstractly somehow to account for different weapons
+           currentWeaponScript.RotateUp(); 
         }
 
         if (inputHdlr.DownKeyHeld)
         {
-            currentWeapon.GetComponent<AbstractWeapon>().RotateDown(); // TODO: Reference this script abstractly somehow to account for different weapons
+            currentWeaponScript.RotateDown(); 
         }
 
         if (inputHdlr.ChoiceKeyDown && !hasFired)
@@ -141,16 +195,25 @@ public class CharacterSliceMovement : MonoBehaviour
 
         if (inputHdlr.ChoiceKeyHeld && firing)
         {
-            currentWeapon.GetComponent<AbstractWeapon>().ChargeShot(); // TODO: Reference this script abstractly somehow to account for different weapons
+            currentWeaponScript.ChargeShot(); 
         }
 
-        if (inputHdlr.ChoiceKeyUp && firing)
+        if (firing && (inputHdlr.ChoiceKeyUp || currentWeaponScript.ShootPower >= currentWeaponScript.MaxShootPower))
         {
             firing = false;
             turnFinished = true;
 
-            currentWeapon.GetComponent<AbstractWeapon>().Fire(); // TODO: Reference this script abstractly somehow to account for different weapons
+            currentWeaponScript.Fire(); 
         }
+    }
+
+    private void SwitchToWeapon(int index)
+    {
+        CurrentWeapon.SetActive(false);
+
+        CurrentWeapon = weaponInstancesList[index];
+
+        CurrentWeapon.SetActive(true);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -181,7 +244,7 @@ public class CharacterSliceMovement : MonoBehaviour
     {
         if (turnFinished)
         {
-            currentWeapon.GetComponent<AbstractWeapon>().CrosshairGO.SetActive(false);
+            CurrentWeapon.GetComponent<AbstractWeapon>().CrosshairGO.SetActive(false);
 
             turnEndTimer += Time.deltaTime;
 

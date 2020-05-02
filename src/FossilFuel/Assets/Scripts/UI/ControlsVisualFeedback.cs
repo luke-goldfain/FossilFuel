@@ -13,7 +13,7 @@ public class ControlsVisualFeedback : MonoBehaviour
     private Color keyDownColor, keyUpColor;
 
     [SerializeField]
-    private Image spaceBar, upArrow, downArrow, leftArrow, rightArrow, attackFill, shiftKey;
+    private Image spaceBar, upArrow, downArrow, leftArrow, rightArrow, attackFill, shiftKey, qKey, eKey;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class ControlsVisualFeedback : MonoBehaviour
 
             if (turnMgr.CurrentTurnSegment == TurnSegments.sliceMovement)
             {
-                BazookaWeapon weapon = turnMgr.MovingCharInstance.GetComponentInChildren<BazookaWeapon>(); // TODO: Replace with an abstracted call to AbstractWeapon somehow
+                AbstractWeapon weapon = turnMgr.MovingCharInstance.GetComponentInChildren<AbstractWeapon>(); // TODO: Replace with an abstracted call to AbstractWeapon somehow
 
                 attackFill.fillAmount += weapon.ShootPowerIncrement / weapon.MaxShootPower;
             }
@@ -89,6 +89,24 @@ public class ControlsVisualFeedback : MonoBehaviour
         else
         {
             shiftKey.color = keyUpColor;
+        }
+
+        if (inputHdlr.ChoiceBackKeyHeld)
+        {
+            qKey.color = keyDownColor;
+        }
+        else
+        {
+            qKey.color = keyUpColor;
+        }
+
+        if (inputHdlr.ChoiceFwdKeyHeld)
+        {
+            eKey.color = keyDownColor;
+        }
+        else
+        {
+            eKey.color = keyUpColor;
         }
     }
 }

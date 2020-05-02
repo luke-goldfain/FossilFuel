@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BazookaWeapon : AbstractWeapon
+public class GrenadeWeapon : AbstractWeapon
 {
-    public BazookaWeapon()
+    public GrenadeWeapon()
     {
-       
+
     }
 
     private void Update()

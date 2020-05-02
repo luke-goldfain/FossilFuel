@@ -20,10 +20,10 @@ public abstract class AbstractWeapon : MonoBehaviour, IWeapon
     [SerializeField]
     public float ShootPowerIncrement;
 
-    [HideInInspector]
+    [SerializeField]
     public GameObject CrosshairGO;
 
-    protected float shootPower;
+    public float ShootPower { get; protected set; }
 
     public void RotateUp()
     {
@@ -43,9 +43,9 @@ public abstract class AbstractWeapon : MonoBehaviour, IWeapon
 
     public void ChargeShot()
     {
-        if (shootPower < MaxShootPower)
+        if (ShootPower < MaxShootPower)
         {
-            shootPower += ShootPowerIncrement;
+            ShootPower += ShootPowerIncrement;
         }
     }
 

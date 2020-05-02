@@ -89,10 +89,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4675279040684905549}
-  - component: {fileID: 8384223760959228284}
+  - component: {fileID: 4238733360712119440}
   - component: {fileID: 330317836799860908}
   m_Layer: 0
-  m_Name: Bazooka
+  m_Name: Cluster Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8384223760959228284
+--- !u!114 &4238733360712119440
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,10 +122,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8307897057050297091}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b40c9f8475dc364194c7e10e4a061e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 634b99ddd05fad549b7edb83fef08844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1334868038179046267, guid: 6b0f7213eea885349a7676e8f7e1a7d6,
+  projectilePrefab: {fileID: 1334868038179046267, guid: a36538679f6868c4c9a8418fc55aa6d5,
     type: 3}
   maxAngle: 80
   minAngle: -80
@@ -171,7 +171,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d296770334aaa6745b3b3339163f5ff8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 361ed2e0d6e1d5a43a9b5c3688423676, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

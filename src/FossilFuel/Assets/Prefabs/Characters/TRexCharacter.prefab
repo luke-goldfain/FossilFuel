@@ -180,9 +180,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliceScale: 0.2
   jumpForce: 5
-  bazookaPrefab: {fileID: 8307897057050297091, guid: df729be200824c646a9a13db6bd2848d,
-    type: 3}
-  currentWeapon: {fileID: 0}
+  weaponPrefabsList:
+  - {fileID: 8307897057050297091, guid: df729be200824c646a9a13db6bd2848d, type: 3}
+  - {fileID: 8307897057050297091, guid: 63e3b91fc05c32f4cbf556011b5d269b, type: 3}
+  - {fileID: 8307897057050297091, guid: 48ab0731c6d019b46a74dfeac730e1c3, type: 3}
+  CurrentWeapon: {fileID: 0}
   boundPrefab: {fileID: 83998909800436519, guid: 5ea2e303d58752741bd7bbb955dfa060,
     type: 3}
 --- !u!54 &5622626658296186596

@@ -75,9 +75,6 @@ public class TurnManager
 
         StartNextCharacterTurn(ch);
 
-        // Notify all observers of NotifyOfSwitch that the player has been switched
-        NotifyOfSwitch?.Invoke();
-
         CheckBothTeamsForActive();
     }
 
@@ -185,6 +182,9 @@ public class TurnManager
         MovingPlayer = ActiveCharacters[charNum].PlayerNumber;
 
         MovingCharInstance = ActiveCharacters[charNum].CharGO;
+
+
+        NotifyOfSwitch?.Invoke();
     }
 
     /// <summary>

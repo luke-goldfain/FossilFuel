@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 941237134728473297}
   - component: {fileID: 4910729050920822219}
-  - component: {fileID: -767394690173882664}
-  - component: {fileID: -2168865372590565581}
+  - component: {fileID: 2522366721032353995}
+  - component: {fileID: 9102955381615143919}
   m_Layer: 9
-  m_Name: BazookaMissile
+  m_Name: GrenadeProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,9 +48,9 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 48
   m_CollisionDetection: 0
---- !u!114 &-767394690173882664
+--- !u!114 &2522366721032353995
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,25 +59,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1334868038179046267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84306d9031f91fa45bb03a2fc3f82406, type: 3}
+  m_Script: {fileID: 11500000, guid: 65b6f14a4b246df4fbf83462f729e3d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 2243754651809120959, guid: 46fad4ad98d544a43abf622d364d96ee,
     type: 3}
---- !u!136 &-2168865372590565581
-CapsuleCollider:
+  explodeTime: 3
+--- !u!135 &9102955381615143919
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1334868038179046267}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3669933
-  m_Height: 1.4740615
-  m_Direction: 0
-  m_Center: {x: 0.2, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0.06, y: -0.09, z: 0}
 --- !u!1 &5294312874228980557
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4962413934757318726}
   - component: {fileID: 125441959433282501}
   m_Layer: 9
-  m_Name: Missile Sprite
+  m_Name: Grenade Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ Transform:
   m_GameObject: {fileID: 5294312874228980557}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 941237134728473297}
   m_RootOrder: 0
@@ -147,7 +147,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e4c7360c99299ee469e73f8415d75aaf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f1e7b2518b5882b49887dffcaa0538ac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
