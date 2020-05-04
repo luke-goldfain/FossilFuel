@@ -9,6 +9,9 @@ public class TurnTextDisplay : MonoBehaviour
 
     private TurnManager turnMgr;
 
+    [SerializeField, Tooltip("The in-scene game object for the restart panel, which includes restart-ability.")]
+    private GameObject restartPanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,5 +48,7 @@ public class TurnTextDisplay : MonoBehaviour
         {
             textMesh.text = "tricera wins!";
         }
+
+        restartPanel.SetActive(true);
     }
 }

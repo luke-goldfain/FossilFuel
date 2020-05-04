@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/POCTest.unity
+    path: Assets/Scenes/In-Build/TitleScreen.unity
+    guid: bb1b1aebe5a05fa4ca6bb260e713256c
+  - enabled: 1
+    path: Assets/Scenes/In-Build/MainGameplayScene.unity
     guid: 2c0eb5af5c17ca94ea91830cb2217d82
   m_configObjects: {}
