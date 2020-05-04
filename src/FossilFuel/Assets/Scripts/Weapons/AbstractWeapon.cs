@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class AbstractWeapon : MonoBehaviour, IWeapon
 {
     public Vector3 projectileSpawn { get; set; }
+    public string weaponName { get; protected set; }
 
     [SerializeField]
     protected GameObject projectilePrefab;

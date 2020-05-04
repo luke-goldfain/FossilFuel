@@ -6,7 +6,7 @@ public class BazookaWeapon : AbstractWeapon
 {
     public BazookaWeapon()
     {
-       
+        this.weaponName = "Bazooka";
     }
 
     private void Update()

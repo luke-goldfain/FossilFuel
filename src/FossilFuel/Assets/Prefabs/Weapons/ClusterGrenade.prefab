@@ -89,10 +89,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4675279040684905549}
-  - component: {fileID: 4238733360712119440}
   - component: {fileID: 330317836799860908}
+  - component: {fileID: -728651012557754344}
   m_Layer: 0
-  m_Name: Cluster Grenade
+  m_Name: ClusterGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,26 +113,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4238733360712119440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8307897057050297091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 634b99ddd05fad549b7edb83fef08844, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1334868038179046267, guid: a36538679f6868c4c9a8418fc55aa6d5,
-    type: 3}
-  maxAngle: 80
-  minAngle: -80
-  rotateDegrees: 0.5
-  MaxShootPower: 10
-  ShootPowerIncrement: 0.16
-  CrosshairGO: {fileID: 7676128031436554223}
 --- !u!212 &330317836799860908
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -182,3 +162,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-728651012557754344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8307897057050297091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c276dfd38b3c06b449250f218ddbad7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 1334868038179046267, guid: a36538679f6868c4c9a8418fc55aa6d5,
+    type: 3}
+  maxAngle: 80
+  minAngle: -80
+  rotateDegrees: 0.5
+  MaxShootPower: 10
+  ShootPowerIncrement: 0.16
+  CrosshairGO: {fileID: 7676128031436554223}

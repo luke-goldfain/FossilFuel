@@ -58,7 +58,7 @@ public class WeaponsVisualFeedback : MonoBehaviour
 
             weaponImage.sprite = activeCharWeaponSprite;
 
-            weaponText.text = activeCharSliceMov.CurrentWeapon.name;
+            weaponText.text = activeCharSliceMov.CurrentWeapon.GetComponent<AbstractWeapon>().weaponName;
         }
     }
 }

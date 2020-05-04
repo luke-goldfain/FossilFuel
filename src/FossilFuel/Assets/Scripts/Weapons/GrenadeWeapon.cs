@@ -6,7 +6,7 @@ public class GrenadeWeapon : AbstractWeapon
 {
     public GrenadeWeapon()
     {
-
+        this.weaponName = "Grenade";
     }
 
     private void Update()
