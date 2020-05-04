@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -20,8 +21,12 @@ public class CharacterHealth : MonoBehaviour
 
     private bool dmgTextEnabled;
 
+    private CameraBillboard billboardScript;
+
     private void Start()
     {
+        billboardScript = this.gameObject.GetComponent<CameraBillboard>();
+
         currentHealth = maxHealth;
 
         hpText.text = currentHealth.ToString();
@@ -38,6 +43,14 @@ public class CharacterHealth : MonoBehaviour
         {
             UpdateDriftDmgUpwards();
         }
+
+        UpdateBillboardText();
+    }
+
+    private void UpdateBillboardText()
+    {
+        dmgText.gameObject.transform.rotation = billboardScript.GetUnflippedRotation();
+        hpText.gameObject.transform.rotation = billboardScript.GetUnflippedRotation();
     }
 
     private void OnTriggerEnter(Collider other)

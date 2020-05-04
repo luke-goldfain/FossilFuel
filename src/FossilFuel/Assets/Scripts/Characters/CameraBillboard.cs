@@ -41,4 +41,9 @@ public class CameraBillboard : MonoBehaviour
             this.transform.rotation = Quaternion.LookRotation(this.transform.position - mainCam.transform.position, Vector3.Cross(this.transform.position - mainCam.transform.position, Vector3.right));
         }
     }
+
+    public Quaternion GetUnflippedRotation()
+    {
+        return Quaternion.LookRotation(mainCam.transform.forward, Vector3.up);
+    }
 }
