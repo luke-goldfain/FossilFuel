@@ -49,8 +49,10 @@ public class CharacterHealth : MonoBehaviour
 
     private void UpdateBillboardText()
     {
-        dmgText.gameObject.transform.rotation = billboardScript.GetUnflippedRotation();
-        hpText.gameObject.transform.rotation = billboardScript.GetUnflippedRotation();
+        Quaternion rot = billboardScript.GetUnflippedRotation();
+
+        dmgText.gameObject.transform.rotation = rot;
+        hpText.gameObject.transform.rotation = rot;
     }
 
     private void OnTriggerEnter(Collider other)
