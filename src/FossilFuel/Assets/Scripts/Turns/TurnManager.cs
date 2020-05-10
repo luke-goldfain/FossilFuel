@@ -49,6 +49,21 @@ public class TurnManager
 
     public TurnSegments CurrentTurnSegment { get; private set; }
 
+    private TurnTimer turnTimer;
+    public float TurnTime = 40f;
+
+    public void EndTurnOfActiveCharacter()
+    {
+        foreach(TurnCharacter ch in ActiveCharacters)
+        {
+            if (ch.CurrentState == CharacterState.active)
+            {
+                ch.EndTurn();
+                break;
+            }
+        }
+    }
+
     public void EndTurn(TurnCharacter ch) // take in a character and find a character on the opposite team to activate
     {
         PruneDeadCharacters();
@@ -183,6 +198,7 @@ public class TurnManager
 
         MovingCharInstance = ActiveCharacters[charNum].CharGO;
 
+        turnTimer.SetTurnTime(TurnTime);
 
         NotifyOfSwitch?.Invoke();
     }
@@ -199,11 +215,13 @@ public class TurnManager
         }
     }
 
-    public void InitCharacterList()
+    public void Init()
     {
         ActiveCharacters = new List<TurnCharacter>();
         TeamOneActiveChars = new List<TurnCharacter>();
         TeamTwoActiveChars = new List<TurnCharacter>();
+
+        turnTimer = TurnTimer.Instance;
     }
 
     public void AssignGridManager(UnityGridManager gm)

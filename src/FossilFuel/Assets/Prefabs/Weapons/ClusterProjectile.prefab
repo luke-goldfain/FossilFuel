@@ -49,7 +49,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 48
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &3335831517273642858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 2243754651809120959, guid: 36ecf73d9a8d89a42aaf723caa60f799,
     type: 3}
-  explodeTime: 3
+  explodeTime: 0.7
   numberOfClusters: 3
   IsParentGrenade: 1
 --- !u!135 &9102955381615143919

@@ -51,6 +51,8 @@ public class CharacterSliceMovement : MonoBehaviour
 
     private CharacterBoundsDisplayer boundsDisp;
 
+    private TurnTimer turnTimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +67,8 @@ public class CharacterSliceMovement : MonoBehaviour
         rb = this.gameObject.GetComponent<Rigidbody>();
 
         boundsDisp = new CharacterBoundsDisplayer();
+
+        turnTimer = TurnTimer.Instance;
 
         StartInitWeapons();
 
@@ -100,6 +104,11 @@ public class CharacterSliceMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (charTurnInfo.DataCharacter.CurrentState != CharacterState.active)
+        {
+            CurrentWeapon.GetComponent<AbstractWeapon>().CrosshairGO.SetActive(false);
+        }
+
         if (charTurnInfo.DataCharacter.CheckCurrentTurnSegment() == TurnSegments.sliceMovement)
         {
             if (this.gameObject.transform.localScale != sliceScaleV3)
@@ -119,10 +128,10 @@ public class CharacterSliceMovement : MonoBehaviour
                 UpdateCheckMoveSlice();
             }
 
-            if (turnFinished)
-            {
-                UpdateCheckAdvanceTurn();
-            }
+            //if (turnFinished)
+            //{
+            //    UpdateCheckAdvanceTurn();
+            //}
         }
     }
 
@@ -202,6 +211,10 @@ public class CharacterSliceMovement : MonoBehaviour
         {
             firing = false;
             turnFinished = true;
+            
+            CurrentWeapon.GetComponent<AbstractWeapon>().CrosshairGO.SetActive(false);
+
+            turnTimer.SetTurnTime(7f);
 
             currentWeaponScript.Fire(); 
         }
@@ -240,27 +253,27 @@ public class CharacterSliceMovement : MonoBehaviour
         }
     }
 
-    private void UpdateCheckAdvanceTurn()
-    {
-        if (turnFinished)
-        {
-            CurrentWeapon.GetComponent<AbstractWeapon>().CrosshairGO.SetActive(false);
+    //private void UpdateCheckAdvanceTurn()
+    //{
+    //    if (turnFinished)
+    //    {
+    //        CurrentWeapon.GetComponent<AbstractWeapon>().CrosshairGO.SetActive(false);
 
-            turnEndTimer += Time.deltaTime;
+    //        turnEndTimer += Time.deltaTime;
 
-            if (turnEndTimer >= turnEndTime)
-            {
-                turnEndTimer = 0f;
+    //        if (turnEndTimer >= turnEndTime)
+    //        {
+    //            turnEndTimer = 0f;
 
-                turnFinished = false;
+    //            turnFinished = false;
 
-                boundsDisp.RemoveBounds();
+    //            boundsDisp.RemoveBounds();
 
-                // Here is where the turn ends
-                charTurnInfo.DataCharacter.EndTurn();
-            }
-        }
-    }
+    //            // Here is where the turn ends
+    //            charTurnInfo.DataCharacter.EndTurn();
+    //        }
+    //    }
+    //}
 
     public void ForceFinishSliceTurn()
     {

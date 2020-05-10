@@ -48,11 +48,11 @@ public class ClusterGrenadeProjectile : MonoBehaviour
 
                     currentChildGrenade.GetComponent<Rigidbody>().velocity = new Vector3(randX, 2f, randZ);
                 }
+
+                Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
+
+                this.gameObject.SetActive(false);
             }
-
-            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
-
-            this.gameObject.SetActive(false);
         }
     }
 

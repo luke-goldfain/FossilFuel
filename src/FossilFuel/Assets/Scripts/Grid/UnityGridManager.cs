@@ -97,7 +97,7 @@ public class UnityGridManager : MonoBehaviour
     {
         turnMgr = TurnManager.Instance;
 
-        turnMgr.InitCharacterList();
+        turnMgr.Init();
         turnMgr.AssignGridManager(this);
 
         ActiveCharsGO = new List<GameObject>();
