@@ -39,9 +39,9 @@ public class TurnTimer : MonoBehaviour
     {
         CurrentTurnTime -= Time.deltaTime;
 
-        if (CurrentTurnTime <= 0f && CurrentTurnTime > -1f)
+        if (CurrentTurnTime <= 0f && CurrentTurnTime > -10f)
         {
-            CurrentTurnTime = -1f;
+            CurrentTurnTime = -10f;
 
             turnMgr.EndTurnOfActiveCharacter();
         }

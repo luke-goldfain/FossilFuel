@@ -101,6 +101,16 @@ public class CharacterHealth : MonoBehaviour
 
     private void Die()
     {
-        this.gameObject.GetComponent<UnityCharacterTurnInfo>().DataCharacter.Die(); // At the end of the turn, the character will be set inactive since its state is now "dead"
+        TurnCharacter dataChar = this.gameObject.GetComponent<UnityCharacterTurnInfo>().DataCharacter;
+
+        // If the character dying is the active character, in case they died without firing, set the turn time to 7 seconds
+        if (dataChar.CurrentState == CharacterState.active)
+        {
+            TurnTimer t = TurnTimer.Instance;
+
+            t.SetTurnTime(7f);
+        }
+
+        dataChar.Die(); // At the end of the turn, the character will be set inactive since its state is now "dead"
     }
 }

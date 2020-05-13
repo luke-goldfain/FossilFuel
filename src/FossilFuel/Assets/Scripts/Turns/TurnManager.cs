@@ -54,13 +54,36 @@ public class TurnManager
 
     public void EndTurnOfActiveCharacter()
     {
+        bool foundActive = false;
+
         foreach(TurnCharacter ch in ActiveCharacters)
         {
             if (ch.CurrentState == CharacterState.active)
             {
+                foundActive = true;
                 ch.EndTurn();
                 break;
             }
+        }
+
+        // This probably means whatever character was meant to be active has died
+        if (!foundActive)
+        {
+            // Keep this outside foreach to avoid collection change during enumeration
+            TurnCharacter dCh = null;
+
+            foreach(TurnCharacter ch in ActiveCharacters)
+            {
+                // This could result in the incorrect character ending its turn if two characters have died in the same turn
+                if (ch.CurrentState == CharacterState.dead)
+                {
+                    dCh = ch;
+                    break;
+                }
+            }
+
+            // End the dead character's turn (this will leave them dead, but still proceed to the next character)
+            if (dCh != null) dCh.EndTurn();
         }
     }
 
