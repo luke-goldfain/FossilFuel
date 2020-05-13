@@ -19,6 +19,7 @@ Slice:
 * __Aim:__ Up/Down Arrow keys
 * __Fire:__ Space (hold)
 * __Jump:__ Shift
+* __Switch Weapon:__ Q/E
 
 **Genre:**
 Artillery, turn-based tactics
