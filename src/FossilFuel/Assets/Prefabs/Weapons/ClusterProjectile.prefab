@@ -64,7 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 2243754651809120959, guid: 36ecf73d9a8d89a42aaf723caa60f799,
     type: 3}
-  explodeTime: 0.7
+  ExplodeTime: 0.8
   numberOfClusters: 3
   IsParentGrenade: 1
 --- !u!135 &9102955381615143919

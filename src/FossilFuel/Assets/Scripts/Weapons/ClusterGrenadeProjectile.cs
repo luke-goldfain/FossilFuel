@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClusterGrenadeProjectile : MonoBehaviour
+public class ClusterGrenadeProjectile : AbstractProjectile
 {
-    [SerializeField]
-    private GameObject explosionPrefab;
+    //[SerializeField]
+    //private GameObject explosionPrefab;
 
-    [SerializeField]
-    private float explodeTime;
+    //[SerializeField]
+    //private float explodeTime;
+
+    //private float explodeTimer;
 
     [SerializeField]
     private int numberOfClusters;
 
     public bool IsParentGrenade;
-
-    private float explodeTimer;
 
     private Rigidbody rb;
 
@@ -31,9 +31,9 @@ public class ClusterGrenadeProjectile : MonoBehaviour
 
         rb.velocity = transform.TransformDirection(localVelocity);
 
-        explodeTimer += Time.deltaTime;
+        ExplodeTimer += Time.deltaTime;
 
-        if (explodeTimer >= explodeTime)
+        if (ExplodeTimer >= ExplodeTime)
         {
             if (IsParentGrenade)
             {
@@ -49,9 +49,7 @@ public class ClusterGrenadeProjectile : MonoBehaviour
                     currentChildGrenade.GetComponent<Rigidbody>().velocity = new Vector3(randX, 2f, randZ);
                 }
 
-                Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
-
-                this.gameObject.SetActive(false);
+                this.Explode();
             }
         }
     }
@@ -60,9 +58,7 @@ public class ClusterGrenadeProjectile : MonoBehaviour
     {
         if (collision.gameObject.layer != 9 && !IsParentGrenade)
         {
-            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
-
-            this.gameObject.SetActive(false);
+            this.Explode();
         }
     }
 }

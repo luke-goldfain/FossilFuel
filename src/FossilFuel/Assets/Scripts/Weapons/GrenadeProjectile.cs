@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadeProjectile : MonoBehaviour
+public class GrenadeProjectile : AbstractProjectile
 {
-    [SerializeField]
-    private GameObject explosionPrefab;
+    //[SerializeField]
+    //private GameObject explosionPrefab;
 
-    [SerializeField]
-    private float explodeTime;
+    //[SerializeField]
+    //private float explodeTime;
 
-    private float explodeTimer;
+    //private float explodeTimer;
 
     private Rigidbody rb;
 
@@ -26,13 +26,11 @@ public class GrenadeProjectile : MonoBehaviour
 
         rb.velocity = transform.TransformDirection(localVelocity);
 
-        explodeTimer += Time.deltaTime;
+        ExplodeTimer += Time.deltaTime;
 
-        if (explodeTimer >= explodeTime)
+        if (ExplodeTimer >= ExplodeTime)
         {
-            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
-
-            this.gameObject.SetActive(false);
+            this.Explode();
         }
     }
 }

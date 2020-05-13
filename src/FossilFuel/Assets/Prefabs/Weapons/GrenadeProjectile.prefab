@@ -64,7 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 2243754651809120959, guid: 46fad4ad98d544a43abf622d364d96ee,
     type: 3}
-  explodeTime: 3
+  ExplodeTime: 3
 --- !u!135 &9102955381615143919
 SphereCollider:
   m_ObjectHideFlags: 0
